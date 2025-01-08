@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_challenge/widgets/button.dart';
 
 void main() {
   runApp(const App());
@@ -13,8 +14,9 @@ class App extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Color(0xFF181818),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 42,
@@ -45,7 +47,46 @@ class App extends StatelessWidget {
                     children: [],
                   )
                 ],
-              )
+              ),
+              SizedBox(
+                height: 100,
+              ),
+              Text(
+                'Total Balance',
+                style: TextStyle(
+                  color: Color.fromRGBO(255, 255, 255, 0.8),
+                  fontSize: 24,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 4,
+                  bottom: 8,
+                ),
+                child: Text(
+                  '\$5 194 482',
+                  style: TextStyle(
+                    fontSize: 44,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Button(
+                    text: 'Transfer',
+                    bgColor: Color(0xFFF2B33A),
+                    textColor: Color(0xFF181818),
+                  ),
+                  Button(
+                    text: 'Request',
+                    bgColor: Color(0xFF1F2123),
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
