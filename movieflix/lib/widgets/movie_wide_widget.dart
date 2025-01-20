@@ -32,7 +32,7 @@ class MovieWide extends StatelessWidget {
     }
 
     return Container(
-      width: 380,
+      width: 384,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Color.fromRGBO(255, 255, 255, 0.2),
