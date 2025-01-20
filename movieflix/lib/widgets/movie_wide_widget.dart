@@ -18,7 +18,6 @@ class MovieWide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     onButtonTap() {
-      print("click!");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -112,10 +111,9 @@ class MovieWide extends StatelessWidget {
               ),
             ),
           ),
-          Transform.scale(
-            scale: 1.2,
-            child: Transform.translate(
-              offset: Offset(-10, 0),
+          Hero(
+            tag: id,
+            child: Container(
               child: Image.network(
                 '$baseUrl$posterPath',
                 headers: const {
