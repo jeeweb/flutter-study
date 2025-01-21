@@ -157,13 +157,18 @@ class _DetailScreenState extends State<DetailScreen> {
                             Row(
                               children: [
                                 for (var i = 1; i <= 5; i++)
-                                  Icon(
-                                    i < rating
-                                        ? Icons.star_rate_rounded
-                                        : Icons.star_rate_outlined,
-                                    color: Colors.yellow,
-                                    size: 24,
-                                  ),
+                                  i < rating
+                                      ? Icon(
+                                          Icons.star_rate_rounded,
+                                          color: Colors.yellow,
+                                          size: 24,
+                                        )
+                                      : Icon(
+                                          Icons.star_rate_outlined,
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          size: 24,
+                                        ),
                               ],
                             ),
                             Padding(
