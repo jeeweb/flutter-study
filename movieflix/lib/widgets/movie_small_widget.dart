@@ -72,13 +72,17 @@ class MovieSmall extends StatelessWidget {
             Row(
               children: [
                 for (var i = 1; i <= 5; i++)
-                  Icon(
-                    i < rating
-                        ? Icons.star_rate_rounded
-                        : Icons.star_rate_outlined,
-                    color: Colors.yellow,
-                    size: 14,
-                  ),
+                  i < rating
+                      ? Icon(
+                          Icons.star_rate_rounded,
+                          color: Colors.yellow,
+                          size: 14,
+                        )
+                      : Icon(
+                          Icons.star_rate_outlined,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          size: 14,
+                        ),
               ],
             ),
           ],
