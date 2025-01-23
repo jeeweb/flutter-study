@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_onboarding/screens/sign_up_screen.dart';
+import 'package:twitter_onboarding/screens/initial_screen.dart';
 
 void main() {
   runApp(const TwitterOnboarding());
@@ -12,12 +12,19 @@ class TwitterOnboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Twitter',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Color(0xFF4E98E9),
+        indicatorColor: Color(0xFF111319),
+        disabledColor: Color(0xFF87898B),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        useMaterial3: false,
       ),
-      home: SignUpScreen(),
+      home: InitialScreen(),
     );
   }
 }
