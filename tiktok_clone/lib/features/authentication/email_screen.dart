@@ -12,17 +12,17 @@ class EmailScreen extends StatefulWidget {
 }
 
 class _EmailScreenState extends State<EmailScreen> {
-  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   String _email = '';
 
   @override
   void initState() {
     super.initState(); // 모든 것의 가장 앞에 super.initState() 선언
-    _emailcontroller.addListener(
+    _emailController.addListener(
       () {
         setState(() {
-          _email = _emailcontroller.text;
+          _email = _emailController.text;
         });
       },
     );
@@ -30,7 +30,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   void dispose() {
-    _emailcontroller.dispose();
+    _emailController.dispose();
     super.dispose(); // 모든 것의 마지막에 super.dispose() 선언
   }
 
@@ -83,7 +83,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 ),
                 Gaps.v16,
                 TextField(
-                  controller: _emailcontroller,
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   onEditingComplete: _onSubmit,
                   decoration: InputDecoration(
