@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_onboarding/screens/create_account_screen.dart';
+import 'package:twitter_onboarding/screens/auth_code_screen.dart';
 import 'package:twitter_onboarding/widgets/primary_button.dart';
 import 'package:twitter_onboarding/widgets/secondary_icon_button.dart';
 
@@ -9,10 +10,11 @@ class InitialScreen extends StatelessWidget {
 
   void _onCreateAccountTap(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(
-          builder: (context) => CreateAccountScreen(
-                isCheckedTerms: false,
-              )),
+      MaterialPageRoute(builder: (context) => AuthCodeScreen()
+          // builder: (context) => CreateAccountScreen(
+          //   isCheckedTerms: false,
+          // ),
+          ),
     );
   }
 
