@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_post.dart';
 
 class VideoTimelineScreen extends StatefulWidget {
   const VideoTimelineScreen({super.key});
@@ -10,45 +11,46 @@ class VideoTimelineScreen extends StatefulWidget {
 class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   int _itemCount = 4;
 
-  List<Color> colors = [
-    Colors.blue,
-    Colors.red,
-    Colors.yellow,
-    Colors.teal,
-  ];
+  final PageController _pageController = PageController();
+  final Duration _scrollDuration = Duration(milliseconds: 200);
+  final Curve _scrollCurve = Curves.linear;
 
   void _onPageChanged(int page) {
     // print(page); // 현재 어떤 페이지가 화면에 보이는지 index 번호로 알려줌
 
+    _pageController.animateToPage(
+      page,
+      duration: _scrollDuration,
+      curve: _scrollCurve,
+    );
     if (page == _itemCount - 1) {
-      // 만약 처음에 itemCount가 4일 때 사용자가 index 3인 페이지에 있으면 4개의 항목을 더 불러오고 아래 Color 리스트도 4개도 더 넣어줌
       _itemCount = _itemCount + 4;
-      colors.addAll([
-        Colors.blue,
-        Colors.red,
-        Colors.yellow,
-        Colors.teal,
-      ]);
       setState(() {});
     }
+  }
+
+  void _onVideoFinished() {
+    _pageController.nextPage(
+      duration: _scrollDuration,
+      curve: _scrollCurve,
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
+      controller: _pageController,
       scrollDirection: Axis.vertical,
       onPageChanged: _onPageChanged,
       itemCount: _itemCount,
-      itemBuilder: (context, index) => Container(
-          color: colors[index],
-          child: Center(
-            child: Text(
-              "Screen $index",
-              style: TextStyle(
-                fontSize: 68,
-              ),
-            ),
-          )),
+      itemBuilder: (context, index) =>
+          VideoPost(onVideoFinished: _onVideoFinished),
     );
   }
 }
