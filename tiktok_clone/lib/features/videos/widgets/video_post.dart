@@ -53,11 +53,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5, // default
       duration: _animationDuration,
     );
-
-    _animationController.addListener(() {
-      //print(_animationController.value); // controller가 변하는 단계를 확인할 수 있음
-      setState(() {});
-    });
   }
 
   @override
@@ -112,8 +107,14 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value,
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child, // 아래의 child인 AnimatedOpacity를 가리킴
+                    );
+                  },
                   child: AnimatedOpacity(
                     opacity: _isPaused ? 1 : 0,
                     duration: _animationDuration,
