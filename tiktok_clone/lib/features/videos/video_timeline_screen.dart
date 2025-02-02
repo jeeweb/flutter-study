@@ -30,6 +30,7 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   }
 
   void _onVideoFinished() {
+    return; // 실제 틱톡에서는 영상이 끝나면 다음 영상으로 넘어가지 않고 반복재생이 되므로 넘어가지 않게 해줌
     _pageController.nextPage(
       duration: _scrollDuration,
       curve: _scrollCurve,

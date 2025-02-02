@@ -36,9 +36,11 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
-    _videoPlayerController.play();
-    setState(() {});
+    //_videoPlayerController.play();
+    await _videoPlayerController
+        .setLooping(true); // 영상 반복재생하기. future를 return 하므로 await 붙여주기
     _videoPlayerController.addListener(_onVideoChange);
+    setState(() {});
   }
 
   @override
