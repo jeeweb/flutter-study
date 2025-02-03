@@ -69,7 +69,9 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     // print("video: #${widget.index} is ${info.visibleFraction * 100}% visible"); // widget이 얼만큼 보이는지에 대한 수치를 퍼센트로 보여주기
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       // 현재 보고있는 영상이 화면에 가득차있고, _videoPlayerController.value가 재생중이 아니라면 재생하기
       _videoPlayerController.play();
       // -> 현재 보고 있는 영상만 재생되고 다음 영상은 완전히 화면 위로 올라올때까지 재생되지 않음
