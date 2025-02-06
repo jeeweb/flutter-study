@@ -99,6 +99,7 @@ class _VideoPostState extends State<VideoPost>
     }
     await showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: Colors
           .transparent, // bottomSheet 기본 배경색을 투명으로 줌으로써 VideoComments Scaffold의 색상이 보이게 됨
       builder: (context) => VideoComments(),
