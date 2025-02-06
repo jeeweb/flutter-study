@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/features/home/widgets/post_options.dart';
 
 class PostItem extends StatelessWidget {
   final String username;
@@ -22,6 +23,14 @@ class PostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onOptionsTap(BuildContext context) async {
+      await showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.white,
+        builder: (context) => PostOptions(),
+      );
+    }
+
     return Column(
       children: [
         Row(
@@ -57,10 +66,13 @@ class PostItem extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 10.0),
-                          FaIcon(
-                            FontAwesomeIcons.ellipsis,
-                            color: Colors.grey.shade600,
-                            size: 18.0,
+                          GestureDetector(
+                            onTap: () => onOptionsTap(context),
+                            child: FaIcon(
+                              FontAwesomeIcons.ellipsis,
+                              color: Colors.grey.shade600,
+                              size: 18.0,
+                            ),
                           )
                         ],
                       ),
