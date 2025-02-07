@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
 import 'package:threads_clone/features/main_navigation/widgets/nav_tab.dart';
+import 'package:threads_clone/features/write/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -13,9 +14,27 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
+  void _onWriteNavTap(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) => WriteScreen(),
+    );
+  }
+
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
+      if (_selectedIndex == 2) {
+        //_onWriteNavTap(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WriteScreen(),
+            fullscreenDialog: true,
+          ),
+        );
+      }
     });
   }
 
@@ -43,7 +62,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 2,
-            child: Container(),
+            child: HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
@@ -59,7 +78,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         color: Colors.transparent,
         child: Row(children: [
           NavTab(
-            isSelected: _selectedIndex == 0,
+            isSelected: _selectedIndex == 0 || _selectedIndex == 2,
             icon: FontAwesomeIcons.house,
             onTap: () => _onTap(0),
           ),
@@ -69,7 +88,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             onTap: () => _onTap(1),
           ),
           NavTab(
-            isSelected: _selectedIndex == 2,
+            //isSelected: _selectedIndex == 2,
+            isSelected: false,
             icon: FontAwesomeIcons.penToSquare,
             onTap: () => _onTap(2),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/home/widgets/post_options.dart';
 
-class PostItem extends StatelessWidget {
+class PostItem extends StatefulWidget {
   final String username;
   final String userAvatar;
   final String contentText;
@@ -22,6 +22,11 @@ class PostItem extends StatelessWidget {
       required this.images});
 
   @override
+  State<PostItem> createState() => _PostItemState();
+}
+
+class _PostItemState extends State<PostItem> {
+  @override
   Widget build(BuildContext context) {
     void onOptionsTap(BuildContext context) async {
       await showModalBottomSheet(
@@ -40,7 +45,7 @@ class PostItem extends StatelessWidget {
               radius: 24,
               backgroundColor: Colors.black,
               foregroundColor: Colors.white,
-              foregroundImage: NetworkImage(userAvatar),
+              foregroundImage: NetworkImage(widget.userAvatar),
             ),
             SizedBox(width: 10.0),
             Flexible(
@@ -51,7 +56,7 @@ class PostItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        username,
+                        widget.username,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -60,7 +65,7 @@ class PostItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            time,
+                            widget.time,
                             style: TextStyle(
                               color: Colors.grey.shade500,
                             ),
@@ -79,13 +84,13 @@ class PostItem extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 4.0),
-                  Text(contentText),
+                  Text(widget.contentText),
                   SizedBox(height: 4.0),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        for (var img in images)
+                        for (var img in widget.images)
                           Row(
                             children: [
                               SizedBox(height: 8.0),
@@ -96,11 +101,11 @@ class PostItem extends StatelessWidget {
                                 ),
                                 child: Image.network(
                                   img,
-                                  width: images.length > 1 ? 312 : 328,
+                                  width: widget.images.length > 1 ? 312 : 328,
                                 ),
                               ),
                               SizedBox(
-                                width: images.length > 1 ? 12.0 : 0,
+                                width: widget.images.length > 1 ? 12.0 : 0,
                                 height: 8.0,
                               ),
                             ],
@@ -137,7 +142,7 @@ class PostItem extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "$replies replies",
+                        "${widget.replies} replies",
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.grey.shade500,
@@ -151,7 +156,7 @@ class PostItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "$likes likes",
+                        "${widget.likes} likes",
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.grey.shade500,
