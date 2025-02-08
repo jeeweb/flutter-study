@@ -77,6 +77,10 @@ class _VideoPostState extends State<VideoPost>
       _videoPlayerController.play();
       // -> 현재 보고 있는 영상만 재생되고 다음 영상은 완전히 화면 위로 올라올때까지 재생되지 않음
     }
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      // video가 재생중이지만 화면에서 보이지 않는 경우 멈추게 하기
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
