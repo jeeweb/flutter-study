@@ -9,14 +9,29 @@ class PostSchema {
   final int replies;
   final int likes;
 
-  PostSchema(
-      {required this.username,
-      required this.userAvatar,
-      required this.time,
-      required this.contentText,
-      required this.replies,
-      required this.likes,
-      required this.images});
+  PostSchema({
+    required this.username,
+    required this.userAvatar,
+    required this.time,
+    required this.contentText,
+    required this.replies,
+    required this.likes,
+    required this.images,
+  });
+}
+
+class UserSchema {
+  final String username;
+  final String userAvatar;
+  final String stateMessage;
+  final String followers;
+
+  UserSchema({
+    required this.username,
+    required this.userAvatar,
+    required this.stateMessage,
+    required this.followers,
+  });
 }
 
 final faker = Faker();
@@ -91,5 +106,57 @@ final List<PostSchema> mockData = [
     ],
     replies: faker.randomGenerator.integer(100),
     likes: faker.randomGenerator.integer(100),
+  ),
+];
+
+final List<UserSchema> mockDataUsers = [
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738008896551-9ab767d9e6ac?q=80&w=2398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738509559266-bdd2a813c8ad?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738447429433-69e3ecd0bdd0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738914401186-618afe776956?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738956952892-7553e0327906?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738830986753-7f4e8f3d18e1?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+  UserSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://plus.unsplash.com/premium_photo-1738614647383-0435fcb26a55?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    followers: "${faker.randomGenerator.integer(300)}K",
   ),
 ];
