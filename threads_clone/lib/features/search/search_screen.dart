@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/data/mock_data.dart';
-import 'package:threads_clone/features/search/widgets/user_list.dart';
+import 'package:threads_clone/features/search/widgets/user_item.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -16,6 +16,13 @@ class _SearchScreenState extends State<SearchScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void dispose() {
+    _textEditingController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
@@ -25,7 +32,6 @@ class _SearchScreenState extends State<SearchScreen> {
         toolbarHeight: 80.0,
         surfaceTintColor: Colors.white,
         centerTitle: false,
-        elevation: 1, // 하단에 구분선
         title: Text(
           "Search",
           textAlign: TextAlign.left,
