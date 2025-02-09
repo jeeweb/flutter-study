@@ -15,6 +15,11 @@ class MyApp extends StatelessWidget {
       title: 'Threads Clone',
       theme: ThemeData(
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+        ),
       ),
       home: MainNavigationScreen(),
     );
