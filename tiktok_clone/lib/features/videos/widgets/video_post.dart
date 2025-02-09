@@ -21,7 +21,7 @@ class VideoPost extends StatefulWidget {
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/example.mov");
+      VideoPlayerController.asset("assets/videos/example.mp4");
 
   late final AnimationController _animationController;
 
