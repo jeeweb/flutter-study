@@ -20,6 +20,8 @@ class TikTokApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A), // 커서 색상
           //selectionColor: Color(0xFFE9435A) // 드래그 블록 색상
         ),
+        splashColor: Colors.transparent, // tab 할때 splash 효과 컬러
+        highlightColor: Colors.transparent, // long press 할 때 효과 컬러
         appBarTheme: AppBarTheme(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
