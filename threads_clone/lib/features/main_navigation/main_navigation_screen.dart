@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
 import 'package:threads_clone/features/main_navigation/widgets/nav_tab.dart';
+import 'package:threads_clone/features/search/search_screen.dart';
 import 'package:threads_clone/features/write/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -42,14 +43,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        title: FaIcon(
-          FontAwesomeIcons.threads,
-          size: 48.0,
-        ),
-      ),
       body: Stack(
         children: [
           Offstage(
@@ -58,7 +51,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: Container(),
+            child: SearchScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
