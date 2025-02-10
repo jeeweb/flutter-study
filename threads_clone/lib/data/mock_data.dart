@@ -1,5 +1,12 @@
 import 'package:faker/faker.dart';
 
+enum ActivityType {
+  followed,
+  replies,
+  mentions,
+  liked,
+}
+
 class PostSchema {
   final String username;
   final String userAvatar;
@@ -31,6 +38,24 @@ class UserSchema {
     required this.userAvatar,
     required this.stateMessage,
     required this.followers,
+  });
+}
+
+class ActivitySchema {
+  final String username;
+  final String userAvatar;
+  final String message;
+  final String stateMessage;
+  final ActivityType activityType;
+  final int timePast;
+
+  ActivitySchema({
+    required this.username,
+    required this.userAvatar,
+    required this.message,
+    required this.stateMessage,
+    required this.activityType,
+    required this.timePast,
   });
 }
 
@@ -158,5 +183,54 @@ final List<UserSchema> mockDataUsers = [
         "https://plus.unsplash.com/premium_photo-1738614647383-0435fcb26a55?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     stateMessage: faker.lorem.word(),
     followers: "${faker.randomGenerator.integer(300)}K",
+  ),
+];
+
+final List<ActivitySchema> mockDataActivities = [
+  ActivitySchema(
+    username: "john_mobbin",
+    userAvatar:
+        "https://images.unsplash.com/photo-1738008896551-9ab767d9e6ac?q=80&w=2398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    activityType: ActivityType.mentions,
+    message:
+        "Here's a thread you should follow if you love botany @jane_mobbin",
+    timePast: 4,
+  ),
+  ActivitySchema(
+    username: "john_mobbin",
+    userAvatar:
+        "https://images.unsplash.com/photo-1738008896551-9ab767d9e6ac?q=80&w=2398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    activityType: ActivityType.replies,
+    message: "Count me in!",
+    timePast: 4,
+  ),
+  ActivitySchema(
+    username: "the.plantdads",
+    userAvatar:
+        "https://images.unsplash.com/photo-1738509559266-bdd2a813c8ad?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: faker.lorem.word(),
+    activityType: ActivityType.followed,
+    message: "",
+    timePast: 5,
+  ),
+  ActivitySchema(
+    username: "the.plantdads",
+    userAvatar:
+        "https://images.unsplash.com/photo-1738509559266-bdd2a813c8ad?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: "Definitely broken!",
+    activityType: ActivityType.liked,
+    message: "",
+    timePast: 5,
+  ),
+  ActivitySchema(
+    username: "theberryjungle",
+    userAvatar:
+        "https://plus.unsplash.com/premium_photo-1738614647383-0435fcb26a55?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    stateMessage: "🌱👀🧵",
+    activityType: ActivityType.liked,
+    message: "",
+    timePast: 5,
   ),
 ];
