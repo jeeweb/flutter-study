@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/data/mock_data.dart';
 import 'package:threads_clone/features/search/widgets/user_item.dart';
 
@@ -66,7 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
           indent: 74.0,
           color: Colors.grey.shade200,
         ),
-        itemBuilder: (context, index) => UserList(
+        itemBuilder: (context, index) => UserItem(
           username: mockDataUsers[index].username,
           userAvatar: mockDataUsers[index].userAvatar,
           stateMessage: mockDataUsers[index].stateMessage,
