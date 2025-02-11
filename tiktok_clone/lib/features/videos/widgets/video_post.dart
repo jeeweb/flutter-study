@@ -70,6 +70,10 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     // print("video: #${widget.index} is ${info.visibleFraction * 100}% visible"); // widget이 얼만큼 보이는지에 대한 수치를 퍼센트로 보여주기
+
+    // visibility에 변화가 있더라도 mount된 상태가 아니라면 아무것도 하지 않도록 조건문 추가
+    if (!mounted) return;
+
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
