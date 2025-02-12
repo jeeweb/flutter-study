@@ -59,6 +59,46 @@ class ActivitySchema {
   });
 }
 
+class ThreadsSchema {
+  final String username;
+  final String userAvatar;
+  final String time;
+  final String contentText;
+  final List<String> images;
+
+  ThreadsSchema({
+    required this.username,
+    required this.userAvatar,
+    required this.time,
+    required this.contentText,
+    required this.images,
+  });
+}
+
+class RepliesSchema {
+  final String username;
+  final String userAvatar;
+  final String time;
+  final String contentText;
+  final List<String> images;
+  final String myName;
+  final String myAvatar;
+  final String myContentText;
+  final String myTime;
+
+  RepliesSchema({
+    required this.myName,
+    required this.myAvatar,
+    required this.myContentText,
+    required this.username,
+    required this.userAvatar,
+    required this.time,
+    required this.contentText,
+    required this.images,
+    required this.myTime,
+  });
+}
+
 final faker = Faker();
 
 final List<PostSchema> mockData = [
@@ -232,5 +272,70 @@ final List<ActivitySchema> mockDataActivities = [
     activityType: ActivityType.liked,
     message: "",
     timePast: 5,
+  ),
+];
+
+final List<ThreadsSchema> mockDataThreads = [
+  ThreadsSchema(
+    username: "jane_mobbin",
+    userAvatar: "https://avatars.githubusercontent.com/u/52396673?v=4",
+    time: "2m",
+    contentText: faker.lorem.sentence(),
+    images: [],
+  ),
+  ThreadsSchema(
+    username: "jane_mobbin",
+    userAvatar: "https://avatars.githubusercontent.com/u/52396673?v=4",
+    time: "1h",
+    contentText: faker.lorem.sentence(),
+    images: [
+      "https://images.unsplash.com/photo-1738444515789-0a1a4c4982dc?q=80&w=1031&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    ],
+  ),
+  ThreadsSchema(
+    username: "jane_mobbin",
+    userAvatar: "https://avatars.githubusercontent.com/u/52396673?v=4",
+    time: "2h",
+    contentText: faker.lorem.sentence(),
+    images: [],
+  ),
+  ThreadsSchema(
+    username: "jane_mobbin",
+    userAvatar: "https://avatars.githubusercontent.com/u/52396673?v=4",
+    time: "6h",
+    contentText: faker.lorem.sentence(),
+    images: [
+      "https://images.unsplash.com/photo-1738683987582-b52d371d2782?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1738298092498-547b98c61e12?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    ],
+  ),
+];
+
+final List<RepliesSchema> mockDataReplies = [
+  RepliesSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1737412358025-160a0c22e6c5?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    time: "2m",
+    contentText: faker.lorem.sentence(),
+    images: [],
+    myName: "jane_mobbin",
+    myAvatar: "https://avatars.githubusercontent.com/u/52396673?v=4",
+    myContentText: faker.lorem.sentence(),
+    myTime: "1m",
+  ),
+  RepliesSchema(
+    username: faker.person.name(),
+    userAvatar:
+        "https://images.unsplash.com/photo-1738316849619-747a83d4e979?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    time: "1h",
+    contentText: faker.lorem.sentence(),
+    images: [
+      "https://plus.unsplash.com/premium_photo-1734549547929-9219737132db?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    ],
+    myName: "jane_mobbin",
+    myAvatar: "https://avatars.githubusercontent.com/u/52396673?v=4",
+    myContentText: faker.lorem.sentence(),
+    myTime: "10m",
   ),
 ];
