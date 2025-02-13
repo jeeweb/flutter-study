@@ -17,14 +17,6 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  void _onWriteNavTap(BuildContext context) async {
-    await showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      builder: (context) => WriteScreen(),
-    );
-  }
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;

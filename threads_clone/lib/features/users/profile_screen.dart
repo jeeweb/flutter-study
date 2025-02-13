@@ -14,7 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  void _onSettingsTap(BuildContext context) {
+  void _onSettingsTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SettingsScreen(),
@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => _onSettingsTap(context),
+                    onPressed: _onSettingsTap,
                     icon: FaIcon(
                       FontAwesomeIcons.bars,
                       size: 24.0,
