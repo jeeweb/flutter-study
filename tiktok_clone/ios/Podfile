@@ -50,7 +50,7 @@ post_install do |installer|
       # permission, just remove the `#` character in front so it looks like this:
       #
       # ## dart: PermissionGroup.camera
-      # 'PERMISSION_CAMERA=1'
+      'PERMISSION_CAMERA=1'
       #
       #  Preprocessor definitions can be found in: https://github.com/Baseflow/flutter-permission-handler/blob/master/permission_handler_apple/ios/Classes/PermissionHandlerEnums.h
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
@@ -84,7 +84,7 @@ post_install do |installer|
         # 'PERMISSION_NOTIFICATIONS=1',
   
         ## dart: PermissionGroup.mediaLibrary
-        # 'PERMISSION_MEDIA_LIBRARY=1',
+        'PERMISSION_MEDIA_LIBRARY=1',
   
         ## dart: PermissionGroup.sensors
         # 'PERMISSION_SENSORS=1',   

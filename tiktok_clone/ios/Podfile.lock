@@ -5,6 +5,8 @@ PODS:
   - gal (1.0.0):
     - Flutter
     - FlutterMacOS
+  - image_picker_ios (0.0.1):
+    - Flutter
   - permission_handler_apple (9.1.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -15,6 +17,7 @@ DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
   - gal (from `.symlinks/plugins/gal/darwin`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
 
@@ -25,6 +28,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   gal:
     :path: ".symlinks/plugins/gal/darwin"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   video_player_avfoundation:
@@ -34,9 +39,10 @@ SPEC CHECKSUMS:
   camera_avfoundation: 04b44aeb14070126c6529e5ab82cc7c9fca107cf
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   gal: baecd024ebfd13c441269ca7404792a7152fde89
+  image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   permission_handler_apple: 3787117e48f80715ff04a3830ca039283d6a4f29
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
 
-PODFILE CHECKSUM: d0ea6d756f747d106f239a3493ae62e56a95a00f
+PODFILE CHECKSUM: d58a96e554c8d35d4f378d856c4f4459f34ae7d7
 
 COCOAPODS: 1.16.2
