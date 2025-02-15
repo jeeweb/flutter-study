@@ -15,7 +15,7 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
 
@@ -27,6 +27,31 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   late FlashMode _flashMode;
   late CameraController _cameraController;
+
+  @override
+  void initState() {
+    super.initState();
+    initPermissions();
+    WidgetsBinding.instance.addObserver(this);
+    _progressAnimationController.addListener(() {
+      // listener는 value가 바뀐걸 알려줌
+      setState(() {});
+    });
+    _progressAnimationController.addStatusListener((status) {
+      // StatusListener는 애니메이션이 끝난걸 알려줌
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
+    _cameraController.dispose();
+    super.dispose();
+  }
 
   late final Animation<double> _buttonAnimation =
       Tween(begin: 1.0, end: 1.3).animate(_buttonAnimationController);
@@ -58,6 +83,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     await _cameraController.prepareForVideoRecording();
 
     _flashMode = _cameraController.value.flashMode;
+
+    setState(() {});
   }
 
   // 카메라와 마이크 요청
@@ -76,22 +103,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       await initCamera();
       setState(() {});
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initPermissions();
-    _progressAnimationController.addListener(() {
-      // listener는 value가 바뀐걸 알려줌
-      setState(() {});
-    });
-    _progressAnimationController.addStatusListener((status) {
-      // StatusListener는 애니메이션이 끝난걸 알려줌
-      if (status == AnimationStatus.completed) {
-        _stopRecording();
-      }
-    });
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -134,11 +145,18 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   }
 
   @override
-  void dispose() {
-    _progressAnimationController.dispose();
-    _buttonAnimationController.dispose();
-    _cameraController.dispose();
-    super.dispose();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state); // 앱을 나갔을 때의 상태를 알 수 있음
+    if (!_hasPermission) return;
+    if (!_cameraController.value.isInitialized)
+      return; // 카메라가 initialized 되었을 때만 dispose 되어야 하므로
+    if (state == AppLifecycleState.paused) {
+      // 유저가 나갔을 때
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      // 다시 돌아왔을 때
+      initCamera();
+    }
   }
 
   Future<void> _onPickVideoPressed() async {
