@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
+import 'package:threads_clone/features/images/image_taking_screen.dart';
 
 class WriteScreen extends StatefulWidget {
   const WriteScreen({super.key});
@@ -51,6 +52,15 @@ class _WriteScreenState extends State<WriteScreen> {
     setState(() {
       _isWriting = false;
     });
+  }
+
+  void _onPostImageTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ImageTakingScreen(),
+        fullscreenDialog: true, // 전체화면으로 열리도록
+      ),
+    );
   }
 
   @override
@@ -170,9 +180,12 @@ class _WriteScreenState extends State<WriteScreen> {
                                   ),
                                 ),
                                 SizedBox(height: 4.0),
-                                FaIcon(
-                                  FontAwesomeIcons.paperclip,
-                                  color: Colors.black26,
+                                GestureDetector(
+                                  onTap: _onPostImageTap,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.paperclip,
+                                    color: Colors.black26,
+                                  ),
                                 )
                               ],
                             ),
