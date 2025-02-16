@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/utils.dart';
 
 class PostReport extends StatelessWidget {
   const PostReport({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24.0),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          //backgroundColor: Colors.white,
           surfaceTintColor: Colors.transparent,
           automaticallyImplyLeading: false,
           title: Text(
@@ -42,13 +45,16 @@ class PostReport extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8.0),
-                      Text(
-                        "Your report is anonymous, except if you're reporting an intellectual property infringement. If someone is in immediate danger, call the local emergency services - don't wait.",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.black45,
-                          height: 1.2,
-                          letterSpacing: 0.1,
+                      Opacity(
+                        opacity: 0.6,
+                        child: Text(
+                          "Your report is anonymous, except if you're reporting an intellectual property infringement. If someone is in immediate danger, call the local emergency services - don't wait.",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            //color: Colors.black45,
+                            height: 1.2,
+                            letterSpacing: 0.1,
+                          ),
                         ),
                       ),
                       SizedBox(height: 16.0),
@@ -56,7 +62,7 @@ class PostReport extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  color: Color(0xFFE0E0E0),
+                  color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                   thickness: 1.0,
                   indent: 0,
                   height: 0,
@@ -66,7 +72,7 @@ class PostReport extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFE0E0E0),
+                        color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                       ),
                     ),
                   ),
@@ -91,7 +97,7 @@ class PostReport extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFE0E0E0),
+                        color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                       ),
                     ),
                   ),
@@ -116,7 +122,7 @@ class PostReport extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFE0E0E0),
+                        color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                       ),
                     ),
                   ),
@@ -141,7 +147,7 @@ class PostReport extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFE0E0E0),
+                        color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                       ),
                     ),
                   ),
@@ -166,7 +172,7 @@ class PostReport extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFE0E0E0),
+                        color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                       ),
                     ),
                   ),
@@ -191,7 +197,7 @@ class PostReport extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 1.0,
-                        color: Color(0xFFE0E0E0),
+                        color: isDark ? Color(0xFF555555) : Color(0xFFE0E0E0),
                       ),
                     ),
                   ),

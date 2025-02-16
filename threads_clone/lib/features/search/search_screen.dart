@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:threads_clone/data/mock_data.dart';
 import 'package:threads_clone/features/search/widgets/user_item.dart';
+import 'package:threads_clone/utils.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -24,6 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = isDarkMode(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드 열릴 때 body가 resize 되지 않도록
@@ -46,14 +48,18 @@ class _SearchScreenState extends State<SearchScreen> {
               horizontal: 16.0,
             ),
             child: CupertinoSearchTextField(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 10.0,
-              ),
-              itemColor: Colors.grey.shade500,
-              prefixInsets: EdgeInsets.only(left: 8.0),
-              controller: _textEditingController,
-            ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 10.0,
+                ),
+                itemColor: Colors.grey.shade500,
+                prefixInsets: EdgeInsets.only(left: 8.0),
+                controller: _textEditingController,
+                backgroundColor:
+                    isDark ? Color(0xFF3A3A3A) : Colors.grey.shade200,
+                style: TextStyle(
+                  color: isDark ? Colors.white : Colors.black,
+                )),
           ),
         ),
       ),
@@ -63,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
         itemCount: mockDataUsers.length,
         separatorBuilder: (context, index) => Divider(
           indent: 74.0,
-          color: Colors.grey.shade200,
+          color: isDark ? const Color(0xFF666666) : Colors.grey.shade200,
         ),
         itemBuilder: (context, index) => UserItem(
           username: mockDataUsers[index].username,

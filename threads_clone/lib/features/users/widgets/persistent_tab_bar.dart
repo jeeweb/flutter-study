@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:threads_clone/utils.dart';
 
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final isDark = isDarkMode(context);
     return Align(
       child: Container(
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.backgroundColor,
         child: TabBar(
-          labelColor: Colors.black,
+          labelColor: isDark ? Colors.white : Colors.black,
           labelPadding: EdgeInsets.symmetric(vertical: 16.0),
           labelStyle: TextStyle(
             fontSize: 16.0,
             fontWeight: FontWeight.w600,
           ),
-          indicatorColor: Colors.black,
+          indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorWeight: 1,
           dividerColor: Colors.grey.shade200,

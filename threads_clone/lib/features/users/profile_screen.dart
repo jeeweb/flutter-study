@@ -5,6 +5,7 @@ import 'package:threads_clone/features/users/settings_screen.dart';
 import 'package:threads_clone/features/users/widgets/persistent_tab_bar.dart';
 import 'package:threads_clone/features/users/widgets/replies_item.dart';
 import 'package:threads_clone/features/users/widgets/threads_item.dart';
+import 'package:threads_clone/utils.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -24,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -94,13 +96,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       vertical: 4.0,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFF5F6F6),
+                                      color: isDark
+                                          ? Colors.grey.shade800
+                                          : Color(0xFFF5F6F6),
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     child: Text(
                                       "threads.net",
                                       style: TextStyle(
-                                        color: Colors.grey.shade500,
+                                        color: isDark
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade500,
                                         fontSize: 12.0,
                                       ),
                                     ),
@@ -189,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ListView.separated(
                 padding: EdgeInsets.zero,
                 separatorBuilder: (context, index) => Divider(
-                  color: Colors.grey.shade300,
+                  color: isDark ? Color(0xFF666666) : Colors.grey.shade300,
                 ),
                 itemCount: 4,
                 itemBuilder: (context, index) => ThreadsItem(
@@ -203,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ListView.separated(
                 padding: EdgeInsets.zero,
                 separatorBuilder: (context, index) => Divider(
-                  color: Colors.grey.shade300,
+                  color: isDark ? Color(0xFF666666) : Colors.grey.shade300,
                 ),
                 itemCount: 2,
                 itemBuilder: (context, index) => RepliesItem(

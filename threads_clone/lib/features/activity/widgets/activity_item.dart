@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/data/mock_data.dart';
+import 'package:threads_clone/utils.dart';
 
 class ActivityItem extends StatelessWidget {
   final String username;
@@ -22,6 +23,7 @@ class ActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -80,7 +82,7 @@ class ActivityItem extends StatelessWidget {
                   text: TextSpan(
                     text: username,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: isDark ? Colors.white : Colors.black,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.1,
                       fontSize: 16.0,

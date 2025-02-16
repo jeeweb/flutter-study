@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/data/mock_data.dart';
 import 'package:threads_clone/features/activity/widgets/activity_item.dart';
+import 'package:threads_clone/utils.dart';
 
 final tabs = [
   "All",
@@ -40,6 +41,8 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -65,9 +68,10 @@ class _ActivityScreenState extends State<ActivityScreen>
                 fontSize: 16.0,
               ),
               labelPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.black,
-              indicatorColor: Colors.transparent,
+              labelColor: Theme.of(context).tabBarTheme.labelColor,
+              unselectedLabelColor:
+                  Theme.of(context).tabBarTheme.unselectedLabelColor,
+              indicatorColor: const Color.fromARGB(0, 183, 172, 172),
               dividerColor: Colors.transparent,
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               tabs: List.generate(
@@ -81,8 +85,11 @@ class _ActivityScreenState extends State<ActivityScreen>
                       color: Colors.grey.shade400,
                     ),
                     borderRadius: BorderRadius.circular(8.0),
-                    color:
-                        _selectedIndex == index ? Colors.black : Colors.white,
+                    color: _selectedIndex == index
+                        ? isDark
+                            ? Colors.white
+                            : Colors.black
+                        : Colors.transparent,
                   ),
                   child: Text(tabs[index]),
                 ),
@@ -97,7 +104,7 @@ class _ActivityScreenState extends State<ActivityScreen>
               itemCount: mockDataActivities.length,
               separatorBuilder: (context, index) => Divider(
                 indent: 74.0,
-                color: Colors.grey.shade200,
+                color: isDark ? Color(0xFF666666) : Colors.grey.shade200,
               ),
               itemBuilder: (context, index) => ActivityItem(
                 username: mockDataActivities[index].username,

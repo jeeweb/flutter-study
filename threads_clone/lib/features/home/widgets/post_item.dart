@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/home/widgets/post_options.dart';
+import 'package:threads_clone/utils.dart';
 
 class PostItem extends StatefulWidget {
   final String username;
@@ -28,10 +29,12 @@ class PostItem extends StatefulWidget {
 class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     void onOptionsTap(BuildContext context) async {
       await showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
         builder: (context) => PostOptions(),
       );
     }

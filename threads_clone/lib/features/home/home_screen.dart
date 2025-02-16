@@ -22,8 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
         title: FaIcon(
           FontAwesomeIcons.threads,
           size: 48.0,

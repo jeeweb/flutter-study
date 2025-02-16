@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/features/home/widgets/post_report.dart';
+import 'package:threads_clone/utils.dart';
 
 class PostOptions extends StatelessWidget {
   const PostOptions({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     void onReportTap(BuildContext context) async {
       Navigator.of(context).pop();
       await showModalBottomSheet(
@@ -15,7 +18,8 @@ class PostOptions extends StatelessWidget {
       );
     }
 
-    return SizedBox(
+    return Container(
+      color: isDark ? Colors.black87 : Colors.transparent,
       height: MediaQuery.of(context).size.height * 0.36,
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -28,8 +32,7 @@ class PostOptions extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                color: Color(0xFFF5F5F5),
-                //color: Colors.red,
+                color: isDark ? Color(0xFF2E2E2E) : Color(0xFFF5F5F5),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +53,7 @@ class PostOptions extends StatelessWidget {
                     ),
                   ),
                   Divider(
-                    color: Color(0xFFE9E9E9),
+                    color: isDark ? const Color(0xFF444444) : Color(0xFFE9E9E9),
                     thickness: 1.0,
                   ),
                   Padding(
@@ -78,7 +81,7 @@ class PostOptions extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
-                color: Color(0xFFF5F5F5),
+                color: isDark ? const Color(0xFF2E2E2E) : Color(0xFFF5F5F5),
                 //color: Colors.red,
               ),
               child: Column(
@@ -100,7 +103,7 @@ class PostOptions extends StatelessWidget {
                     ),
                   ),
                   Divider(
-                    color: Color(0xFFE9E9E9),
+                    color: isDark ? const Color(0xFF444444) : Color(0xFFE9E9E9),
                     thickness: 1.0,
                   ),
                   Padding(
