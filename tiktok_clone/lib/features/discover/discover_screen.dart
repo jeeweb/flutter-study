@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils.dart';
 
 final tabs = [
   "Top",
@@ -49,6 +50,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             controller: _textEditingController,
             onChanged: _onSearchChange,
             onSubmitted: _onSearchSubmitted,
+            style: TextStyle(
+              color: isDarkMode(context) ? Colors.white : Colors.black,
+            ),
           ),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory, // 클릭했을 때 배경에 splash 애니메이션 효과
@@ -61,9 +65,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size16,
             ),
-            indicatorColor: Colors.black,
-            labelColor: Colors.black, // 활성화된 탭의 label 폰트컬러
-            unselectedLabelColor: Colors.grey.shade500, // 비활성화된 탭의 label 폰트 컬러
+            indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
             tabs: [
               for (var tab in tabs)
                 Tab(
@@ -117,7 +119,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   Gaps.v5,
                   DefaultTextStyle(
                     style: TextStyle(
-                      color: Colors.grey.shade500,
+                      color: isDarkMode(context)
+                          ? Colors.grey.shade300
+                          : Colors.grey.shade500,
                       fontWeight: FontWeight.w600,
                     ),
                     child: Row(
