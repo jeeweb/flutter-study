@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
-import 'package:threads_clone/features/images/image_taking_screen.dart';
+import 'package:threads_clone/features/camera/camera_screen.dart';
 
 class WriteScreen extends StatefulWidget {
   const WriteScreen({super.key});
@@ -14,6 +17,8 @@ class _WriteScreenState extends State<WriteScreen> {
   final TextEditingController _textEditingController = TextEditingController();
   String _postText = "";
   bool _isWriting = false;
+  bool _isSelectedFile = false;
+  XFile? selectedImage;
 
   @override
   void initState() {
@@ -54,13 +59,17 @@ class _WriteScreenState extends State<WriteScreen> {
     });
   }
 
-  void _onPostImageTap() {
-    Navigator.of(context).push(
+  void _onPostImageTap() async {
+    final selected = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ImageTakingScreen(),
-        fullscreenDialog: true, // 전체화면으로 열리도록
+        builder: (context) => CameraScreen(),
       ),
     );
+    if (selected != null) {
+      selectedImage = selected;
+      _isSelectedFile = true;
+      setState(() {});
+    }
   }
 
   @override
@@ -180,13 +189,24 @@ class _WriteScreenState extends State<WriteScreen> {
                                   ),
                                 ),
                                 SizedBox(height: 4.0),
-                                GestureDetector(
-                                  onTap: _onPostImageTap,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.paperclip,
-                                    color: Colors.black26,
-                                  ),
-                                )
+                                !_isSelectedFile
+                                    ? GestureDetector(
+                                        onTap: _onPostImageTap,
+                                        child: FaIcon(
+                                          FontAwesomeIcons.paperclip,
+                                          color: Colors.black26,
+                                        ),
+                                      )
+                                    : Stack(
+                                        children: [
+                                          AspectRatio(
+                                            aspectRatio: 3 / 2,
+                                            child: Image.file(
+                                                File(selectedImage!.path),
+                                                fit: BoxFit.cover),
+                                          )
+                                        ],
+                                      )
                               ],
                             ),
                           ),
