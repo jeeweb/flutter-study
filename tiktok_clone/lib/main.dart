@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tiktok_clone/router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
@@ -13,7 +14,8 @@ class TikTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'TickTok Clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
@@ -81,7 +83,6 @@ class TikTokApp extends StatelessWidget {
         ),
         useMaterial3: false,
       ),
-      home: MainNavigationScreen(),
     );
   }
 }
