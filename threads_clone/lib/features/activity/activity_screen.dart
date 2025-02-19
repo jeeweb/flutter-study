@@ -11,6 +11,7 @@ final tabs = [
 ];
 
 class ActivityScreen extends StatefulWidget {
+  static const routeURL = "/activity";
   const ActivityScreen({super.key});
 
   @override

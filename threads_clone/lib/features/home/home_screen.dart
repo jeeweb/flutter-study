@@ -5,6 +5,7 @@ import 'package:threads_clone/data/mock_data.dart';
 import 'package:threads_clone/features/home/widgets/post_item.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeURL = "/";
   const HomeScreen({super.key});
 
   @override

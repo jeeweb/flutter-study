@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threads_clone/data/mock_data.dart';
 import 'package:threads_clone/features/users/settings_screen.dart';
 import 'package:threads_clone/features/users/widgets/persistent_tab_bar.dart';
@@ -8,6 +9,7 @@ import 'package:threads_clone/features/users/widgets/threads_item.dart';
 import 'package:threads_clone/utils.dart';
 
 class ProfileScreen extends StatefulWidget {
+  static const routeURL = "/profile";
   const ProfileScreen({super.key});
 
   @override
@@ -16,11 +18,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   void _onSettingsTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => SettingsScreen(),
-      ),
-    );
+    context.go(SettingsScreen.routeURL);
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => SettingsScreen(),
+    //   ),
+    // );
   }
 
   @override
@@ -44,16 +47,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: _onSettingsTap,
                     icon: FaIcon(
-                      FontAwesomeIcons.instagram,
+                      FontAwesomeIcons.bars,
                       size: 24.0,
                     ),
                   ),
                   IconButton(
-                    onPressed: _onSettingsTap,
+                    onPressed: () {},
                     icon: FaIcon(
-                      FontAwesomeIcons.bars,
+                      FontAwesomeIcons.instagram,
                       size: 24.0,
                     ),
                   ),

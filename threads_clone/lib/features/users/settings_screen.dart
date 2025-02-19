@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/users/privacy_screen.dart';
 
 final settingsMenu = [
@@ -30,14 +31,17 @@ final settingsMenu = [
 ];
 
 class SettingsScreen extends StatelessWidget {
+  static const routeURL = "/settings";
+  static const routeName = "settings";
   const SettingsScreen({super.key});
 
   void _onPrivacyTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => PrivacyScreen(),
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => PrivacyScreen(),
+    //   ),
+    // );
+    context.pushNamed(PrivacyScreen.routeName);
   }
 
   @override

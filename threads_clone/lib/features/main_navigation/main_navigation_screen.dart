@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/activity/activity_screen.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
 import 'package:threads_clone/features/main_navigation/widgets/nav_tab.dart';
@@ -8,7 +9,8 @@ import 'package:threads_clone/features/users/profile_screen.dart';
 import 'package:threads_clone/features/write/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  final Widget child;
+  const MainNavigationScreen({super.key, required this.child});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -31,6 +33,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         );
       }
     });
+
+    switch (index) {
+      case 0:
+        context.go(HomeScreen.routeURL);
+        break;
+      case 1:
+        context.go(SearchScreen.routeURL);
+        break;
+      case 3:
+        context.go(ActivityScreen.routeURL);
+        break;
+      case 4:
+        context.go(ProfileScreen.routeURL);
+        break;
+    }
   }
 
   @override

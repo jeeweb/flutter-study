@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:threads_clone/router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Threads Clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
@@ -51,7 +53,6 @@ class MyApp extends StatelessWidget {
           indicatorColor: Colors.white,
         ),
       ),
-      home: MainNavigationScreen(),
     );
   }
 }
