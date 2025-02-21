@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threads_clone/features/users/repos/theme_config_repo.dart';
 import 'package:threads_clone/features/users/view_models/theme_config_vm.dart';
@@ -11,14 +11,11 @@ void main() async {
   final repository = ThemeConfigRepository(preferences);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ThemeConfigViewModel(repository),
-        ),
-      ],
-      child: const MyApp(),
-    ),
+    ProviderScope(overrides: [
+      ThemeConfigProvider.overrideWith(
+        () => ThemeConfigViewModel(repository),
+      ),
+    ], child: const MyApp()),
   );
 }
 

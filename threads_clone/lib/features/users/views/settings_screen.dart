@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:threads_clone/features/users/view_models/theme_config_vm.dart';
 import 'package:threads_clone/features/users/views/privacy_screen.dart';
-import 'package:threads_clone/utils.dart';
 
 final settingsMenu = [
   {
@@ -33,7 +31,7 @@ final settingsMenu = [
   },
 ];
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   static const routeURL = "/settings";
   static const routeName = "settings";
   const SettingsScreen({super.key});
@@ -48,9 +46,10 @@ class SettingsScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //final isDark = isDarkMode(context);
-    final isDark = context.watch<ThemeConfigViewModel>().darkTheme;
+    final isDark = ref.watch(ThemeConfigProvider).darkTheme;
+    print(isDark);
 
     return Scaffold(
       backgroundColor: isDark ? Colors.black : Colors.white,
@@ -180,9 +179,9 @@ class SettingsScreen extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
           SwitchListTile.adaptive(
-            value: context.watch<ThemeConfigViewModel>().darkTheme,
+            value: ref.watch(ThemeConfigProvider).darkTheme,
             onChanged: (value) =>
-                context.read<ThemeConfigViewModel>().setDarkTheme(value),
+                ref.read(ThemeConfigProvider.notifier).setDarkTheme(value),
             title: Text(
               "Change Theme",
               style: TextStyle(
@@ -193,9 +192,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              context.watch<ThemeConfigViewModel>().darkTheme
-                  ? "Change to Light Theme"
-                  : "Change to Dark Theme",
+              isDark ? "Change to Light Theme" : "Change to Dark Theme",
               style: TextStyle(
                 color: isDark
                     ? Color.fromRGBO(255, 255, 255, 0.5)
