@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:threads_clone/features/users/privacy_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:threads_clone/features/users/view_models/theme_config_vm.dart';
+import 'package:threads_clone/features/users/views/privacy_screen.dart';
+import 'package:threads_clone/utils.dart';
 
 final settingsMenu = [
   {
@@ -36,25 +39,33 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   void _onPrivacyTap(BuildContext context) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => PrivacyScreen(),
-    //   ),
-    // );
-    context.pushNamed(PrivacyScreen.routeName);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PrivacyScreen(),
+      ),
+    );
+    //context.pushNamed(PrivacyScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    //final isDark = isDarkMode(context);
+    final isDark = context.watch<ThemeConfigViewModel>().darkTheme;
+
     return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
       appBar: AppBar(
         elevation: 1,
-        surfaceTintColor: Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
+        iconTheme: IconThemeData(
+          color: isDark ? Colors.white : Colors.black,
+        ),
         title: Text(
           "Settings",
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.w700,
+            color: isDark ? Colors.white : Colors.black,
           ),
         ),
       ),
@@ -68,7 +79,7 @@ class SettingsScreen extends StatelessWidget {
             leading: FaIcon(
               FontAwesomeIcons.userPlus,
               size: 18.0,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             title: Text(
               'Follow and invite friends',
@@ -76,6 +87,7 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -84,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
             leading: FaIcon(
               FontAwesomeIcons.bell,
               size: 24.0,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             title: Text(
               'Notifications',
@@ -92,6 +104,7 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -100,7 +113,7 @@ class SettingsScreen extends StatelessWidget {
             leading: FaIcon(
               FontAwesomeIcons.lock,
               size: 24.0,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             title: Text(
               'Privacy',
@@ -108,6 +121,7 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -116,7 +130,7 @@ class SettingsScreen extends StatelessWidget {
             leading: FaIcon(
               FontAwesomeIcons.circleUser,
               size: 24.0,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             title: Text(
               'Account',
@@ -124,6 +138,7 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -132,7 +147,7 @@ class SettingsScreen extends StatelessWidget {
             leading: FaIcon(
               FontAwesomeIcons.circleQuestion,
               size: 24.0,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             title: Text(
               'Help',
@@ -140,6 +155,7 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -148,7 +164,7 @@ class SettingsScreen extends StatelessWidget {
             leading: FaIcon(
               FontAwesomeIcons.circleInfo,
               size: 24.0,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
             title: Text(
               'About',
@@ -156,11 +172,36 @@ class SettingsScreen extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ),
           Divider(
             color: Colors.grey.shade300,
+          ),
+          SwitchListTile.adaptive(
+            value: context.watch<ThemeConfigViewModel>().darkTheme,
+            onChanged: (value) =>
+                context.read<ThemeConfigViewModel>().setDarkTheme(value),
+            title: Text(
+              "Change Theme",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+                color: isDark ? Colors.white : Colors.black,
+              ),
+            ),
+            subtitle: Text(
+              context.watch<ThemeConfigViewModel>().darkTheme
+                  ? "Change to Light Theme"
+                  : "Change to Dark Theme",
+              style: TextStyle(
+                color: isDark
+                    ? Color.fromRGBO(255, 255, 255, 0.5)
+                    : Color.fromRGBO(0, 0, 0, 0.5),
+              ),
+            ),
           ),
           ListTile(
             title: Text(

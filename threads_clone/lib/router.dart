@@ -4,9 +4,9 @@ import 'package:threads_clone/features/activity/activity_screen.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
 import 'package:threads_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:threads_clone/features/search/search_screen.dart';
-import 'package:threads_clone/features/users/privacy_screen.dart';
-import 'package:threads_clone/features/users/profile_screen.dart';
-import 'package:threads_clone/features/users/settings_screen.dart';
+import 'package:threads_clone/features/users/views/privacy_screen.dart';
+import 'package:threads_clone/features/users/views/profile_screen.dart';
+import 'package:threads_clone/features/users/views/settings_screen.dart';
 
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 

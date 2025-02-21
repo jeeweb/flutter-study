@@ -5,7 +5,7 @@ import 'package:threads_clone/features/activity/activity_screen.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
 import 'package:threads_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:threads_clone/features/search/search_screen.dart';
-import 'package:threads_clone/features/users/profile_screen.dart';
+import 'package:threads_clone/features/users/views/profile_screen.dart';
 import 'package:threads_clone/features/write/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {

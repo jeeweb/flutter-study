@@ -9,6 +9,9 @@ PODS:
     - Flutter
   - permission_handler_apple (9.1.1):
     - Flutter
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
@@ -16,6 +19,7 @@ DEPENDENCIES:
   - gal (from `.symlinks/plugins/gal/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 EXTERNAL SOURCES:
   camera_avfoundation:
@@ -28,6 +32,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
   camera_avfoundation: 04b44aeb14070126c6529e5ab82cc7c9fca107cf
@@ -35,6 +41,7 @@ SPEC CHECKSUMS:
   gal: baecd024ebfd13c441269ca7404792a7152fde89
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   permission_handler_apple: 3787117e48f80715ff04a3830ca039283d6a4f29
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
 
 PODFILE CHECKSUM: cbfe8ce37a365846b23f8dde206f5e0f2afb602a
 

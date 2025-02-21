@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:threads_clone/features/users/repos/theme_config_repo.dart';
+import 'package:threads_clone/features/users/view_models/theme_config_vm.dart';
 import 'package:threads_clone/router.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final preferences = await SharedPreferences.getInstance();
+  final repository = ThemeConfigRepository(preferences);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ThemeConfigViewModel(repository),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
