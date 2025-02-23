@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
@@ -10,7 +11,7 @@ import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
   final int index;
 
@@ -18,10 +19,10 @@ class VideoPost extends StatefulWidget {
       {super.key, required this.onVideoFinished, required this.index});
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/example.mp4");
@@ -62,10 +63,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5, // default
       duration: _animationDuration,
     );
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -78,8 +75,8 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    if (muted) {
+
+    if (ref.read(PlaybackConfigProvider).muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -95,10 +92,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      // autoplay 상태값 확인해서 적용
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-
-      if (autoplay) {
+      if (ref.read(PlaybackConfigProvider).autoplay) {
         // 현재 보고있는 영상이 화면에 가득차있고, _videoPlayerController.value가 재생중이 아니라면 재생하기
         _videoPlayerController.play();
         // -> 현재 보고 있는 영상만 재생되고 다음 영상은 완전히 화면 위로 올라올때까지 재생되지 않음
@@ -185,13 +179,9 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              onPressed: () {
-                context
-                    .read<PlaybackConfigViewModel>()
-                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
-              },
+              onPressed: _onPlaybackConfigChanged,
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                ref.watch(PlaybackConfigProvider).muted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
