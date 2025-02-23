@@ -30,21 +30,6 @@ final routerProvider = Provider((ref) {
         name: SignUpScreen.routeName,
         path: SignUpScreen.routeURL,
         builder: (context, state) => SignUpScreen(),
-        routes: [
-          GoRoute(
-            path: UsernameScreen.routeURL,
-            name: UsernameScreen.routeName,
-            builder: (context, state) => UsernameScreen(),
-          ),
-          GoRoute(
-            name: EmailScreen.routeName,
-            path: EmailScreen.routeURL,
-            builder: (context, state) {
-              final args = state.extra as EmailScreenArgs;
-              return EmailScreen(username: args.username);
-            },
-          ),
-        ],
       ),
       GoRoute(
         name: LoginScreen.routeName,
