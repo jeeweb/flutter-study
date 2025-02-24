@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/features/home/home_screen.dart';
 import 'package:threads_clone/features/camera/camera_screen.dart';
 
 class WriteScreen extends StatefulWidget {

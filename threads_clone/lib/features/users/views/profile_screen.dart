@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:threads_clone/data/mock_data.dart';
 import 'package:threads_clone/features/users/views/settings_screen.dart';
 import 'package:threads_clone/features/users/views/widgets/persistent_tab_bar.dart';

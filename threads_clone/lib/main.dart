@@ -1,12 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threads_clone/features/users/repos/theme_config_repo.dart';
 import 'package:threads_clone/features/users/view_models/theme_config_vm.dart';
+import 'package:threads_clone/firebase_options.dart';
 import 'package:threads_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   final preferences = await SharedPreferences.getInstance();
   final repository = ThemeConfigRepository(preferences);
 
@@ -19,14 +26,14 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       title: 'Threads Clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
