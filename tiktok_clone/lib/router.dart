@@ -3,12 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 final routerProvider = Provider((ref) {
+  ref.watch(authState); // router에서 authState stream 감지
   return GoRouter(
     initialLocation: "/home",
     redirect: (context, state) {
