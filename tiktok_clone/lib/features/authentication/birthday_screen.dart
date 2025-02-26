@@ -35,7 +35,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
 
   void _onNextTap() {
     // print(ref.read(signUpForm)); // 입력한 email과 password 확인 가능
-    ref.read(signUpProvider.notifier).signUp();
+    ref.read(signUpProvider.notifier).signUp(context);
     // context.goNamed(InterestsScreen.routeName);
   }
 
