@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:threads_clone/features/authentication/view_models/login_view_model.dart';
 import 'package:threads_clone/features/authentication/views/sign_up_screen.dart';
 import 'package:threads_clone/features/home/home_screen.dart';
 
@@ -15,11 +16,15 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   String _email = '';
   String _password = '';
+
+  Map<String, String> formData = {};
 
   @override
   void initState() {
@@ -58,7 +63,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onSignUpTap() {
-    //context.pushNamed(SignUpScreen.routeName);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -69,12 +73,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _onLoginTap(BuildContext context) {
     // ref.read(signUpProvider.notifier).signUp();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => HomeScreen(),
+    //   ),
+    // );
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        ref.read(LoginProvider.notifier).login(
+              formData["email"]!,
+              formData["password"]!,
+              context,
+            );
+      }
+    }
   }
 
   @override
@@ -95,89 +109,109 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               SizedBox(
                 height: 40.0,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Email",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w700,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Email",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            errorText: _isEmailValid(),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value != null && value.isEmpty) {
+                              return "Please write your email";
+                            }
+                            return null;
+                          },
+                          onSaved: (newValue) => {
+                            if (newValue != null) {formData['email'] = newValue}
+                          },
+                        ),
+                      ],
                     ),
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      errorText: _isEmailValid(),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
+                    SizedBox(height: 24.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Password",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        TextFormField(
+                          onEditingComplete: () => _onLoginTap(context),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "More than 8 characters",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            return null;
+                          },
+                          onSaved: (newValue) => {
+                            if (newValue != null)
+                              {formData['password'] = newValue}
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 36.0),
+                    GestureDetector(
+                      onTap: () => _onLoginTap(context),
+                      child: FractionallySizedBox(
+                        widthFactor: 1,
+                        child: Container(
+                          padding: EdgeInsets.all(14.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Text(
+                            "Login",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Password",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  TextField(
-                    controller: _passwordController,
-                    keyboardType: TextInputType.emailAddress,
-                    onEditingComplete: () => _onLoginTap(context),
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "More than 8 characters",
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade400,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 36.0),
-              GestureDetector(
-                onTap: () => _onLoginTap(context),
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  child: Container(
-                    padding: EdgeInsets.all(14.0),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey.shade300,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0)),
-                    child: Text(
-                      "Login",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
               ),
               SizedBox(height: 24.0),

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/authentication/view_models/signup_view_model.dart';
-import 'package:threads_clone/features/authentication/views/login_screen.dart';
+import 'package:threads_clone/features/home/home_screen.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   static const routeURL = "/signup";
@@ -15,24 +15,15 @@ class SignUpScreen extends ConsumerStatefulWidget {
 }
 
 class _SignUpScreenState extends ConsumerState<SignUpScreen> {
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  String _username = '';
   String _email = '';
   String _password = '';
 
   @override
   void initState() {
     super.initState();
-    _usernameController.addListener(
-      () {
-        setState(() {
-          _username = _usernameController.text;
-        });
-      },
-    );
     _emailController.addListener(
       () {
         setState(() {
@@ -51,7 +42,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose(); // 모든 것의 마지막에 super.dispose() 선언
@@ -78,12 +68,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       "email": _email,
       "password": _password,
     };
-    ref.read(signUpProvider.notifier).signUp();
-    print(ref.read(signUpForm));
+    ref.read(signUpProvider.notifier).signUp(context);
+    //print(ref.read(signUpForm));
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginScreen(),
+        builder: (context) => HomeScreen(),
       ),
     );
   }
