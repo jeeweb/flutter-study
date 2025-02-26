@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/camera/camera_screen.dart';
+import 'package:threads_clone/utils.dart';
 
 class WriteScreen extends StatefulWidget {
   const WriteScreen({super.key});
@@ -37,28 +38,22 @@ class _WriteScreenState extends State<WriteScreen> {
 
   void _onClosePressed() {
     Navigator.pop(context);
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => HomeScreen(),
-    //   ),
-    // );
   }
 
-  void _onStartWriting() {
+  void onStartWriting() {
     setState(() {
       _isWriting = true;
     });
   }
 
-  void _stopWriting() {
+  void stopWriting() {
     FocusScope.of(context).unfocus();
     setState(() {
       _isWriting = false;
     });
   }
 
-  void _onPostImageTap() async {
+  void onPostImageTap() async {
     final selected = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CameraScreen(),
@@ -73,6 +68,8 @@ class _WriteScreenState extends State<WriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
+
     return Stack(
       children: [
         Positioned(
@@ -87,11 +84,11 @@ class _WriteScreenState extends State<WriteScreen> {
               topRight: Radius.circular(24.0),
             )),
             child: GestureDetector(
-              onTap: _stopWriting,
+              onTap: stopWriting,
               child: Scaffold(
-                backgroundColor: Colors.white,
+                backgroundColor: isDark ? Color(0xFF222222) : Colors.white,
                 appBar: AppBar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: isDark ? Color(0xFF222222) : Colors.white,
                   leadingWidth: 90.0,
                   title: Text(
                     "New thread",
@@ -183,17 +180,21 @@ class _WriteScreenState extends State<WriteScreen> {
                                   decoration: InputDecoration.collapsed(
                                     hintText: "Start a thread...",
                                     hintStyle: TextStyle(
-                                      color: Colors.black38,
+                                      color: isDark
+                                          ? Colors.white54
+                                          : Colors.black38,
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: 4.0),
                                 !_isSelectedFile
                                     ? GestureDetector(
-                                        onTap: _onPostImageTap,
+                                        onTap: onPostImageTap,
                                         child: FaIcon(
                                           FontAwesomeIcons.paperclip,
-                                          color: Colors.black26,
+                                          color: isDark
+                                              ? Colors.white60
+                                              : Colors.black26,
                                         ),
                                       )
                                     : Stack(
@@ -217,16 +218,16 @@ class _WriteScreenState extends State<WriteScreen> {
                 bottomSheet: Container(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   width: double.infinity,
-                  height: 52.0,
+                  height: 62.0,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? Colors.black : Colors.white,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Anyone can reply",
                           style: TextStyle(
-                            color: Colors.black45,
+                            color: isDark ? Colors.white70 : Colors.black45,
                             fontSize: 18.0,
                           )),
                       Text(
