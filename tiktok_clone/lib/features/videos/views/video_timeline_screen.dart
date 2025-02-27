@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/features/videos/view_models/timeline_view_model.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_post.dart';
 
-class VideoTimelineScreen extends StatefulWidget {
+class VideoTimelineScreen extends ConsumerStatefulWidget {
   const VideoTimelineScreen({super.key});
 
   @override
-  State<VideoTimelineScreen> createState() => _VideoTimelineScreenState();
+  VideoTimelineScreenState createState() => VideoTimelineScreenState();
 }
 
-class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
+class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   int _itemCount = 4;
 
   final PageController _pageController = PageController();
@@ -53,19 +55,33 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _onRefresh,
-      displacement: 50,
-      edgeOffset: 20,
-      color: Theme.of(context).primaryColor,
-      child: PageView.builder(
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
-        onPageChanged: _onPageChanged,
-        itemCount: _itemCount,
-        itemBuilder: (context, index) =>
-            VideoPost(onVideoFinished: _onVideoFinished, index: index),
-      ),
-    );
+    // TimelineViewModel의 build 메서드가 끝나서 데이터가 오기까지 기다려야함
+    return ref.watch(timelineProvider).when(
+          // when은 Provider의 각기 다른 state를 위한 callback을 제공
+          loading: () => Center(
+              child:
+                  CircularProgressIndicator()), // Provider가 로딩 중일 때 (API를 기다릴 때) return 하는 값
+          error: (error, stackTrace) => Center(
+              child: Text(
+            'Could not load videos: $error',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          )), // error가 있을 때
+          data: (videos) => RefreshIndicator(
+            onRefresh: _onRefresh,
+            displacement: 50,
+            edgeOffset: 20,
+            color: Theme.of(context).primaryColor,
+            child: PageView.builder(
+              controller: _pageController,
+              scrollDirection: Axis.vertical,
+              onPageChanged: _onPageChanged,
+              itemCount: videos.length,
+              itemBuilder: (context, index) =>
+                  VideoPost(onVideoFinished: _onVideoFinished, index: index),
+            ),
+          ), // 데이터가 있을 때 RefreshIndicator 값 반환
+        );
   }
 }
