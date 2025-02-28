@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/features/home/widgets/post_report.dart';
+import 'package:threads_clone/features/home/views/widgets/post_report.dart';
 import 'package:threads_clone/utils.dart';
 
 class PostOptions extends StatelessWidget {

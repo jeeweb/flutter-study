@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/authentication/view_models/signup_view_model.dart';
-import 'package:threads_clone/features/home/home_screen.dart';
+import 'package:threads_clone/features/home/views/home_screen.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   static const routeURL = "/signup";

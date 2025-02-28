@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/activity/activity_screen.dart';
 import 'package:threads_clone/features/authentication/views/login_screen.dart';
 import 'package:threads_clone/features/authentication/views/sign_up_screen.dart';
-import 'package:threads_clone/features/home/home_screen.dart';
+import 'package:threads_clone/features/home/views/home_screen.dart';
 import 'package:threads_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:threads_clone/features/search/search_screen.dart';
 import 'package:threads_clone/features/users/views/privacy_screen.dart';

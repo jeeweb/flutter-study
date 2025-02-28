@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/features/home/widgets/post_options.dart';
+import 'package:threads_clone/features/home/views/widgets/post_options.dart';
 import 'package:threads_clone/utils.dart';
 
 class PostItem extends StatefulWidget {
-  final String username;
+  final String creator;
   final String userAvatar;
   final String contentText;
-  final String time;
+  final int time;
   final List<String> images;
-  final int replies;
+  final int comments;
   final int likes;
 
   const PostItem(
       {super.key,
-      required this.username,
+      required this.creator,
       required this.userAvatar,
       required this.contentText,
       required this.time,
-      required this.replies,
+      required this.comments,
       required this.likes,
       required this.images});
 
@@ -59,7 +59,7 @@ class _PostItemState extends State<PostItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.username,
+                        widget.creator,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -68,7 +68,7 @@ class _PostItemState extends State<PostItem> {
                       Row(
                         children: [
                           Text(
-                            widget.time,
+                            "${widget.time}",
                             style: TextStyle(
                               color: Colors.grey.shade500,
                             ),
@@ -145,7 +145,7 @@ class _PostItemState extends State<PostItem> {
                   Row(
                     children: [
                       Text(
-                        "${widget.replies} replies",
+                        "${widget.comments} replies",
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.grey.shade500,

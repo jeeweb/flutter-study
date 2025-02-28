@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/features/home/widgets/post_options.dart';
+import 'package:threads_clone/features/home/views/widgets/post_options.dart';
 
 class RepliesItem extends StatefulWidget {
   final String username;

@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/authentication/view_models/login_view_model.dart';
 import 'package:threads_clone/features/authentication/views/sign_up_screen.dart';
-import 'package:threads_clone/features/home/home_screen.dart';
+import 'package:threads_clone/features/home/views/home_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   static const routeURL = "/login";
