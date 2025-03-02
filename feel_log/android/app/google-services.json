@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722731501949",
+    "project_id": "feellog-74bea",
+    "storage_bucket": "feellog-74bea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722731501949:android:6a13bc8fd4bdf9a86b6414",
+        "android_client_info": {
+          "package_name": "com.example.feel_log"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBIvLliam1Mx_YU8brJunRIzhPp4HKDeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
