@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 
-class FLTextFieldInput extends StatefulWidget {
-  final TextEditingController controller;
+class FLTextFormField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final bool isPasswordField;
+  final String? Function(String?) validator;
+  final Function(String?)? onSaved;
 
-  const FLTextFieldInput({
+  const FLTextFormField({
     super.key,
-    required this.controller,
     required this.labelText,
     required this.hintText,
     this.isPasswordField = false,
+    required this.validator,
+    this.onSaved,
   });
 
-  @override
-  State<FLTextFieldInput> createState() => _FLTextFieldInputState();
-}
-
-class _FLTextFieldInputState extends State<FLTextFieldInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,17 +39,18 @@ class _FLTextFieldInputState extends State<FLTextFieldInput> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: widget.controller,
-              obscureText: widget.isPasswordField,
+            TextFormField(
+              obscureText: isPasswordField,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: widget.labelText,
+                labelText: labelText,
                 labelStyle: FLTextStyles.inputLabel,
-                hintText: widget.hintText,
+                hintText: hintText,
                 hintStyle: FLTextStyles.inputHint,
                 border: InputBorder.none,
               ),
+              validator: validator,
+              onSaved: onSaved,
             ),
           ],
         ),

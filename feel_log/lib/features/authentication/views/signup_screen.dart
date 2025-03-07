@@ -1,66 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:feel_log/router/router_constants.dart';
+import 'package:feel_log/features/authentication/view_models/signup_view_model.dart';
 import 'package:feel_log/features/authentication/views/widgets/text_field_input.dart';
 import 'package:feel_log/features/authentication/views/widgets/primary_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/core.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController passwordConfirmController =
-      TextEditingController();
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, String> formData = {};
 
-  String _username = "";
-  String _email = "";
   String _password = "";
-  String _passwordConfirm = "";
 
-  @override
-  void initState() {
-    super.initState();
-    usernameController.addListener(() {
-      setState(() {
-        _username = usernameController.text;
-      });
-    });
-    emailController.addListener(() {
-      setState(() {
-        _email = emailController.text;
-      });
-    });
-    passwordController.addListener(() {
-      setState(() {
-        _password = passwordController.text;
-      });
-    });
-    passwordController.addListener(() {
-      setState(() {
-        _passwordConfirm = passwordConfirmController.text;
-      });
-    });
+  String? _isUsernameValid(value) {
+    if (value.isEmpty) return "Please write your username.";
+    return null;
+  }
+
+  String? _isEmailValid(value) {
+    if (value.isEmpty) return "Please write your email.";
+    final regExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!regExp.hasMatch(value)) {
+      return "Email is not valid";
+    }
+    return null;
+  }
+
+  String? _isPasswordValid(value) {
+    if (value.isEmpty) return "Please write your password.";
+    if (value.isNotEmpty && value.length < 8) {
+      return "Password should be more than 8 characters.";
+    }
+    _password = value;
+    return null;
+  }
+
+  String? _isPasswordConfirm(value) {
+    if (value.isEmpty) return "Please confirm your password.";
+    if (_password != value) {
+      return "It is different with the password.";
+    }
+    return null;
   }
 
   void _onLoginTap() {
     Navigator.pop(context);
   }
 
-  void _onSignUpTap() {}
+  void _onSignUpTap() {
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
 
-  @override
-  void dispose() {
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    passwordConfirmController.dispose();
-    super.dispose();
+        ref.read(signUpForm.notifier).state = {
+          "username": formData["username"],
+          "email": formData["email"],
+          "password": formData["password"]
+        };
+        ref.read(signUpProvider.notifier).signUp(context);
+        context.goNamed(RouteNames.home);
+      }
+    }
   }
 
   @override
@@ -114,53 +124,65 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   vertical: 36.0,
                   horizontal: 48.0,
                 ),
-                child: Column(
-                  children: [
-                    FLTextFieldInput(
-                      controller: usernameController,
-                      labelText: "Username",
-                      hintText: "Make your Username.",
-                    ),
-                    FLTextFieldInput(
-                      controller: emailController,
-                      labelText: "Email",
-                      hintText: "Write your Email Address.",
-                    ),
-                    FLTextFieldInput(
-                      controller: passwordController,
-                      labelText: "Password",
-                      hintText: "More than 8 characters.",
-                      isPasswordField: true,
-                    ),
-                    FLTextFieldInput(
-                      controller: passwordConfirmController,
-                      labelText: "Confirm Password",
-                      hintText: "Confirm your Password.",
-                      isPasswordField: true,
-                    ),
-                    SizedBox(height: 16.0),
-                    FLPrimaryButton(
-                      buttonText: "Sign Up",
-                      onTap: _onSignUpTap,
-                    ),
-                    SizedBox(height: 24.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have your account?  ",
-                          style: FLTextStyles.infoText,
-                        ),
-                        GestureDetector(
-                          onTap: _onLoginTap,
-                          child: Text(
-                            "Log In",
-                            style: FLTextStyles.infoTextBold,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      FLTextFormField(
+                        labelText: "Username",
+                        hintText: "Make your Username.",
+                        validator: (value) => _isUsernameValid(value),
+                        onSaved: (value) => {
+                          if (value != null) {formData["username"] = value}
+                        },
+                      ),
+                      FLTextFormField(
+                        labelText: "Email",
+                        hintText: "Write your Email Address.",
+                        validator: (value) => _isEmailValid(value),
+                        onSaved: (value) => {
+                          if (value != null) {formData["email"] = value}
+                        },
+                      ),
+                      FLTextFormField(
+                        labelText: "Password",
+                        hintText: "More than 8 characters.",
+                        isPasswordField: true,
+                        validator: (value) => _isPasswordValid(value),
+                        onSaved: (value) => {
+                          if (value != null) {formData["password"] = value}
+                        },
+                      ),
+                      FLTextFormField(
+                        labelText: "Confirm Password",
+                        hintText: "Confirm your Password.",
+                        isPasswordField: true,
+                        validator: (value) => _isPasswordConfirm(value),
+                      ),
+                      SizedBox(height: 16.0),
+                      FLPrimaryButton(
+                        buttonText: "Sign Up",
+                        onTap: _onSignUpTap,
+                      ),
+                      SizedBox(height: 24.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have your account?  ",
+                            style: FLTextStyles.infoText,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          GestureDetector(
+                            onTap: _onLoginTap,
+                            child: Text(
+                              "Log In",
+                              style: FLTextStyles.infoTextBold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
