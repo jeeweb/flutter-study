@@ -16,7 +16,7 @@ class FeelLogApp extends ConsumerWidget {
       theme: ThemeData(
         useMaterial3: true,
         //brightness: Brightness.light,
-        textTheme: GoogleFonts.afacadTextTheme(),
+        textTheme: GoogleFonts.notoSansKrTextTheme(),
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         scaffoldBackgroundColor: Color(0xFF010101),

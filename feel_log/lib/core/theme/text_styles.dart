@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 abstract class FLTextStyles {
-  static const TextStyle headline = TextStyle(
+  static TextStyle headlineBK = GoogleFonts.afacad(
     fontSize: 44.0,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
+    color: Color(0xFF010101),
   );
 
-  static const TextStyle inputLabel = TextStyle(
+  static TextStyle headlineWH = GoogleFonts.afacad(
+    fontSize: 44.0,
+    fontWeight: FontWeight.w400,
+    color: Colors.white,
+  );
+
+  static TextStyle inputLabel = GoogleFonts.afacad(
     color: Color(0xFF010101),
     fontSize: 20.0,
     fontWeight: FontWeight.w500,
   );
 
   static const TextStyle inputHint = TextStyle(
-    fontSize: 18.0,
-    color: Color(0xFFD2D2D2),
+    fontSize: 14.0,
+    color: Color(0xFFC4C4C4),
   );
 
   static const TextStyle infoText = TextStyle(
@@ -23,6 +31,17 @@ abstract class FLTextStyles {
   );
 
   static const TextStyle infoTextBold = TextStyle(
+    color: Color(0xFF010101),
+    fontSize: 18.0,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle infoTextEng = GoogleFonts.afacad(
+    color: Color(0xFF010101),
+    fontSize: 18.0,
+  );
+
+  static TextStyle infoTextBoldEng = GoogleFonts.afacad(
     color: Color(0xFF010101),
     fontSize: 18.0,
     fontWeight: FontWeight.w600,

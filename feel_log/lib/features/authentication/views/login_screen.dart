@@ -62,7 +62,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               height: MediaQuery.of(context).size.height * .2,
               alignment: Alignment(0.0, 0.0),
               decoration: BoxDecoration(),
-              child: FLLogo(),
+              child: FLLogo(
+                isAuth: true,
+              ),
             ),
             Expanded(
               child: Container(
@@ -83,7 +85,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       children: [
                         Text(
                           "Login",
-                          style: FLTextStyles.headline,
+                          style: FLTextStyles.headlineBK,
                         ),
                         SizedBox(height: 24.0),
                         FLTextFormField(
@@ -114,13 +116,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           children: [
                             Text(
                               "Don't have any account?  ",
-                              style: FLTextStyles.infoText,
+                              style: FLTextStyles.infoTextEng,
                             ),
                             GestureDetector(
                               onTap: _onSignUpTap,
                               child: Text(
                                 "Sign Up",
-                                style: FLTextStyles.infoTextBold,
+                                style: FLTextStyles.infoTextBoldEng,
                               ),
                             ),
                           ],

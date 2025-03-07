@@ -97,11 +97,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       child: Center(
                         child: Text(
                           "Sign Up",
-                          style: TextStyle(
-                            fontSize: 44.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
+                          style: FLTextStyles.headlineWH,
                         ),
                       ),
                     ),
@@ -170,13 +166,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         children: [
                           Text(
                             "Already have your account?  ",
-                            style: FLTextStyles.infoText,
+                            style: FLTextStyles.infoTextEng,
                           ),
                           GestureDetector(
                             onTap: _onLoginTap,
                             child: Text(
                               "Log In",
-                              style: FLTextStyles.infoTextBold,
+                              style: FLTextStyles.infoTextBoldEng,
                             ),
                           ),
                         ],
