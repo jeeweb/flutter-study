@@ -29,6 +29,13 @@ class FeelLogApp extends ConsumerWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
+        sliderTheme: SliderThemeData(
+          thumbColor: Color(0xFF010101),
+          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
+          inactiveTickMarkColor: Color(0xFF010101),
+          activeTrackColor: Colors.red,
+          trackHeight: 4.0,
+        ),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
