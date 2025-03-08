@@ -5,6 +5,8 @@ class FLTextFormField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final bool isPasswordField;
+  final int? maxLines;
+  final int? maxLength;
   final String? Function(String?) validator;
   final Function(String?)? onSaved;
 
@@ -12,6 +14,8 @@ class FLTextFormField extends StatelessWidget {
     super.key,
     required this.labelText,
     required this.hintText,
+    this.maxLines,
+    this.maxLength,
     this.isPasswordField = false,
     required this.validator,
     this.onSaved,
@@ -40,6 +44,8 @@ class FLTextFormField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
+              maxLength: maxLength,
+              maxLines: maxLines,
               obscureText: isPasswordField,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
