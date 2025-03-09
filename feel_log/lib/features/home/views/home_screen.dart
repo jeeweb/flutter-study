@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:feel_log/features/home/view_model/home_view_model.dart';
 import 'package:feel_log/features/home/views/widgets/post_item.dart';
@@ -12,34 +13,25 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class Event {
-  String title;
-  Event(this.title);
-}
-
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  Map<DateTime, List<Event>> events = {
-    DateTime.utc(2025, 3, 10): [Event('title'), Event('title2')],
-    DateTime.utc(2025, 3, 12): [
-      Event('title'),
-      Event('title2'),
-      Event('title3')
-    ],
-    DateTime.utc(2025, 3, 13): [
-      Event('title'),
-      Event('title2'),
-      Event('title3'),
-      Event('title4'),
-    ],
-    DateTime.utc(2025, 3, 9): [Event('title3')],
-  };
+  List _getEventsForDay(DateTime day) {
+    DateTime normalizedDay = DateTime(day.year, day.month, day.day);
+    return ref.read(homeProvider.notifier).events[normalizedDay] ?? [];
+  }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    return events[day] ?? [];
+  Widget _buildEventMarker() {
+    return Container(
+      width: 6,
+      height: 6,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        shape: BoxShape.circle,
+      ),
+    );
   }
 
   @override
@@ -107,6 +99,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                           child: TableCalendar(
+                            eventLoader: _getEventsForDay,
                             focusedDay: _focusedDay,
                             firstDay: DateTime(2000),
                             lastDay: DateTime(2100),
@@ -128,7 +121,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 _focusedDay = focusedDay;
                               });
                             },
-                            eventLoader: _getEventsForDay,
                             headerStyle: HeaderStyle(
                               titleTextStyle: TextStyle(
                                 fontSize: 16.0,
@@ -136,32 +128,50 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                               formatButtonTextStyle: TextStyle(
                                 fontSize: 12.0,
-                                color: Color.fromRGBO(255, 255, 255, 0.5),
+                                color: Color.fromRGBO(255, 255, 255, 0.8),
                               ),
                               formatButtonDecoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
                                 border: Border.all(
-                                  color: Color.fromRGBO(255, 255, 255, 0.5),
+                                  color: Color.fromRGBO(255, 255, 255, 0.6),
                                 ),
                               ),
+                              leftChevronIcon: Icon(MdiIcons.chevronLeft),
+                              rightChevronIcon: Icon(MdiIcons.chevronRight),
+                            ),
+                            daysOfWeekStyle: DaysOfWeekStyle(
+                              weekdayStyle: TextStyle(color: Colors.white),
+                              weekendStyle: TextStyle(color: Colors.white),
                             ),
                             calendarStyle: CalendarStyle(
                               cellMargin: EdgeInsets.all(8.0),
+                              defaultTextStyle: TextStyle(color: Colors.white),
+                              weekendTextStyle: TextStyle(color: Colors.white),
+                              holidayTextStyle: TextStyle(color: Colors.white),
                               todayTextStyle:
                                   TextStyle(color: Color(0xFF010101)),
                               todayDecoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
-                              markerSize: 4.0,
-                              markerDecoration: BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
+                              outsideTextStyle: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 0.5),
                               ),
                               markersAnchor: -0.8,
                               markerMargin:
                                   const EdgeInsets.symmetric(horizontal: 1.0),
                               markersMaxCount: 4,
+                            ),
+                            calendarBuilders: CalendarBuilders(
+                              markerBuilder: (context, date, events) {
+                                if (events.isNotEmpty) {
+                                  return Positioned(
+                                    bottom: 0,
+                                    child: _buildEventMarker(),
+                                  );
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ),
@@ -193,8 +203,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   postContent: posts[index].postContent,
                                   createdAt: posts[index].createdAt,
                                 ),
-                                separatorBuilder: (context, index) => SizedBox(
-                                  height: 32.00,
+                                separatorBuilder: (context, index) => Divider(
+                                  height: 0.4,
+                                  color: Color.fromRGBO(164, 164, 164, 0.4),
                                 ),
                               ),
                             ),
