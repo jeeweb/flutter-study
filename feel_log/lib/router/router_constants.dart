@@ -4,6 +4,7 @@ class RouteURL {
   static const home = '/home';
   static const post = '/post';
   static const profile = '/profile';
+  static const settings = '/settings';
 }
 
 class RouteNames {
@@ -12,4 +13,5 @@ class RouteNames {
   static const home = 'home';
   static const post = 'post';
   static const profile = 'profile';
+  static const settings = 'settings';
 }

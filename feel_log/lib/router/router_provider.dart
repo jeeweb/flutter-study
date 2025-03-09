@@ -9,6 +9,7 @@ import 'package:feel_log/features/authentication/views/signup_screen.dart';
 import 'package:feel_log/features/main_navigation/main_navigation_screen.dart';
 import 'package:feel_log/features/home/views/home_screen.dart';
 import 'package:feel_log/features/post/views/post_screen.dart';
+import 'package:feel_log/features/settings/settings_screen.dart';
 import 'package:feel_log/features/user/views/user_profile_screen.dart';
 
 part 'router_provider.g.dart';
@@ -51,6 +52,15 @@ GoRouter route(Ref ref) {
                 name: RouteNames.post,
                 path: RouteURL.post,
                 builder: (context, state) => PostScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: RouteNames.settings,
+                path: RouteURL.settings,
+                builder: (context, state) => SettingsScreen(),
               ),
             ],
           ),
