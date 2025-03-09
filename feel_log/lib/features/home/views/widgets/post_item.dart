@@ -26,7 +26,6 @@ class PostItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("$postId, $moodTheme, $postTitle, $createdAt");
     void onDelete(String postId) {
       try {
         ref.read(postProvider.notifier).deleteLog(postId);
@@ -35,52 +34,57 @@ class PostItem extends ConsumerWidget {
       }
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              spacing: 8.0,
-              children: [
-                Icon(
-                  getMoodIcon(moodTheme),
-                  size: 24.0,
-                ),
-                Text(
-                  formatDate(createdAt),
-                  style: TextStyle(fontSize: 12.0, color: Colors.grey),
-                ),
-              ],
-            ),
-            //IconButton(icon: Icon(MdiIcons.pencil), onPressed: _onModifyTap, )
-            IconButton(
-              icon: Icon(
-                MdiIcons.trashCanOutline,
-                size: 18.0,
-                color: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 8.0,
+                children: [
+                  Icon(
+                    getMoodIcon(moodTheme),
+                    size: 28.0,
+                  ),
+                  Text(
+                    formatDate(createdAt),
+                    style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                  ),
+                ],
               ),
-              onPressed: () => onDelete(postId),
-            )
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Text(
-            postTitle,
-            style: TextStyle(
-                //color: cardTitleColor(moodTheme),
-                fontSize: 20.0,
-                fontWeight: FontWeight.w600),
+              //IconButton(icon: Icon(MdiIcons.pencil), onPressed: _onModifyTap, )
+              IconButton(
+                visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+                icon: Icon(
+                  MdiIcons.trashCanOutline,
+                  size: 18.0,
+                  color: Colors.grey,
+                ),
+                onPressed: () => onDelete(postId),
+              )
+            ],
           ),
-        ),
-        Text(
-          postContent,
-          style: TextStyle(fontSize: 14.0),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Text(
+              postTitle,
+              style: TextStyle(
+                  //color: cardTitleColor(moodTheme),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+          Text(
+            postContent,
+            style: TextStyle(fontSize: 14.0),
+          ),
+        ],
+      ),
     );
   }
 }

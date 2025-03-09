@@ -89,7 +89,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       onTap: _onLoginTap,
                       child: Icon(
                         MdiIcons.chevronLeft,
-                        size: 18.0,
+                        size: 36.0,
                         color: Colors.white,
                       ),
                     ),
@@ -101,7 +101,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 18.0),
+                    SizedBox(width: 36.0),
                   ],
                 ),
               ),

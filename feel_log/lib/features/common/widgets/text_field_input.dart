@@ -14,7 +14,7 @@ class FLTextFormField extends StatelessWidget {
     super.key,
     required this.labelText,
     required this.hintText,
-    this.maxLines,
+    this.maxLines = 1,
     this.maxLength,
     this.isPasswordField = false,
     required this.validator,
