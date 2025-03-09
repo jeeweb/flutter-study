@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/core.dart';
+import '../../../core/core.dart';
 
 class FLTextFormField extends StatelessWidget {
   final String labelText;
@@ -24,7 +24,7 @@ class FLTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 12.0,

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:feel_log/router/router_constants.dart';
 import 'package:feel_log/features/authentication/view_models/login_view_model.dart';
-import 'package:feel_log/features/authentication/views/widgets/primary_button.dart';
-import 'package:feel_log/features/authentication/views/widgets/text_field_input.dart';
+import 'package:feel_log/features/common/widgets/primary_button.dart';
+import 'package:feel_log/features/common/widgets/text_field_input.dart';
 import '../../../core/core.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
