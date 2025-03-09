@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:feel_log/router/router_constants.dart';
 import 'package:feel_log/features/authentication/view_models/signup_view_model.dart';
 import 'package:feel_log/features/common/widgets/text_field_input.dart';
@@ -88,7 +88,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     GestureDetector(
                       onTap: _onLoginTap,
                       child: Icon(
-                        FontAwesomeIcons.arrowLeft,
+                        MdiIcons.chevronLeft,
                         size: 18.0,
                         color: Colors.white,
                       ),
