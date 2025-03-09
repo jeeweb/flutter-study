@@ -14,29 +14,38 @@ class FeelLogApp extends ConsumerWidget {
       title: 'FeelLog',
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        useMaterial3: true,
-        //brightness: Brightness.light,
-        textTheme: GoogleFonts.notoSansKrTextTheme(),
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        scaffoldBackgroundColor: Color(0xFF010101),
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.black,
-          //titleTextStyle: TextStyle(),
-        ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-        sliderTheme: SliderThemeData(
-          thumbColor: Color(0xFF010101),
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
-          inactiveTickMarkColor: Color(0xFF010101),
-          activeTrackColor: Colors.red,
-          trackHeight: 4.0,
-        ),
-      ),
+          useMaterial3: true,
+          //brightness: Brightness.light,
+          textTheme: GoogleFonts.notoSansKrTextTheme(),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          scaffoldBackgroundColor: Color(0xFF010101),
+          //scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            backgroundColor: Colors.black,
+            //titleTextStyle: TextStyle(),
+          ),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+          ),
+          sliderTheme: SliderThemeData(
+            thumbColor: Color(0xFF010101),
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
+            inactiveTickMarkColor: Color(0xFF010101),
+            activeTrackColor: Colors.red,
+            trackHeight: 4.0,
+          ),
+          datePickerTheme: DatePickerThemeData(
+            backgroundColor: Colors.white,
+            confirmButtonStyle: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Color(0xFF010101)),
+            ),
+            cancelButtonStyle: ButtonStyle(
+              foregroundColor: WidgetStateProperty.all(Color(0xFF010101)),
+            ),
+          )),
       darkTheme: ThemeData(
         useMaterial3: true,
         //brightness: Brightness.dark,
