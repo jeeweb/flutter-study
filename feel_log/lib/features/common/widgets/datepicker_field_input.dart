@@ -14,11 +14,11 @@ class FLDatePickerField extends StatefulWidget {
   });
 
   @override
-  State<FLDatePickerField> createState() => _FLDatePickerFieldState();
+  FLDatePickerFieldState createState() => FLDatePickerFieldState();
 }
 
-class _FLDatePickerFieldState extends State<FLDatePickerField> {
-  final TextEditingController _dateController = TextEditingController();
+class FLDatePickerFieldState extends State<FLDatePickerField> {
+  late TextEditingController _dateController = TextEditingController();
 
   DateTime initialDate = DateTime.now();
 
@@ -26,6 +26,7 @@ class _FLDatePickerFieldState extends State<FLDatePickerField> {
   void initState() {
     super.initState();
     //print(date); // date 값 확인하기
+    initialDate = DateTime.now();
     _setTextFieldDate(initialDate);
   }
 
@@ -53,6 +54,14 @@ class _FLDatePickerFieldState extends State<FLDatePickerField> {
         _setTextFieldDate(initialDate);
       });
     }
+  }
+
+  void resetDate() {
+    setState(() {
+      initialDate = DateTime.now();
+      _dateController = TextEditingController();
+      _setTextFieldDate(initialDate);
+    });
   }
 
   @override

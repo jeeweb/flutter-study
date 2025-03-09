@@ -7,7 +7,6 @@ import 'package:feel_log/features/authentication/repos/authentication_repository
 
 class PostViewModel extends AsyncNotifier<void> {
   late final PostRepository _postRepo;
-  // List<PostModel> _list = [];
 
   @override
   FutureOr<void> build() async {
@@ -15,18 +14,19 @@ class PostViewModel extends AsyncNotifier<void> {
   }
 
   Future<void> postLog(double moodTheme, String postTitle, String postContent,
-      DateTime date) async {
+      DateTime createdAt, DateTime logDate) async {
     final user = ref.read(authRepo).user;
 
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
       () async {
         final newLog = PostModel(
-          postId: date.millisecondsSinceEpoch,
+          postId: (logDate.millisecondsSinceEpoch).toString(),
           moodTheme: moodTheme,
           postTitle: postTitle,
           postContent: postContent,
-          createdAt: date,
+          logDate: logDate,
+          createdAt: createdAt,
           userId: user!.uid,
         );
 
@@ -36,6 +36,10 @@ class PostViewModel extends AsyncNotifier<void> {
     if (state.hasError) {
       print(state.error);
     }
+  }
+
+  Future<void> deleteLog(postId) async {
+    await _postRepo.deletePost(postId);
   }
 }
 

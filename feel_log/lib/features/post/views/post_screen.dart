@@ -1,8 +1,7 @@
-import 'package:feel_log/router/router_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:feel_log/router/router_constants.dart';
 import 'package:feel_log/features/common/widgets/primary_button.dart';
 import 'package:feel_log/features/common/widgets/text_field_input.dart';
 import 'package:feel_log/features/common/widgets/datepicker_field_input.dart';
@@ -18,23 +17,11 @@ class PostScreen extends ConsumerStatefulWidget {
 
 class _PostScreenState extends ConsumerState<PostScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FLDatePickerFieldState> _datePickerKey = GlobalKey();
+
   Map<String, dynamic> formData = {};
 
   double _sliderValue = 1;
-
-  IconData getIcon() {
-    if (_sliderValue < 1) {
-      return MdiIcons.circle;
-    } else if (_sliderValue < 2) {
-      return MdiIcons.square;
-    } else if (_sliderValue < 3) {
-      return MdiIcons.hexagon;
-    } else if (_sliderValue < 4) {
-      return MdiIcons.octagram;
-    } else {
-      return MdiIcons.decagram;
-    }
-  }
 
   String? _isTitleValid(value) {
     if (value.isEmpty) return "Please write the title.";
@@ -53,21 +40,26 @@ class _PostScreenState extends ConsumerState<PostScreen> {
 
         try {
           ref.read(postProvider.notifier).postLog(
-                _sliderValue,
-                formData["postTitle"],
-                formData["postContent"],
-                formData["date"],
-              );
+              _sliderValue,
+              formData["postTitle"],
+              formData["postContent"],
+              formData["createdAt"],
+              DateTime.timestamp());
 
           print("✅ 데이터가 Firestore에 저장됨!");
 
           // 성공적으로 저장되면 입력값 초기화
+          _datePickerKey.currentState?.resetDate();
+
           setState(() {
             _sliderValue = 1;
             formData.clear();
+            _formKey.currentState!.reset();
           });
 
-          context.pushReplacement(RouteURL.home);
+          Future.delayed(Duration(milliseconds: 200), () {
+            context.pushReplacement(RouteURL.home);
+          });
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Post saved successfully!")),
@@ -164,8 +156,10 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                       ),
                       SizedBox(height: 12.0),
                       FLDatePickerField(
-                        onSaved: (value) =>
-                            {formData["date"] = DateTime.tryParse(value ?? "")},
+                        key: _datePickerKey,
+                        onSaved: (value) => {
+                          formData["createdAt"] = DateTime.tryParse(value ?? "")
+                        },
                       ),
                       FLTextFormField(
                         labelText: "Title",

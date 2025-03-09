@@ -1,8 +1,9 @@
 class PostModel {
-  final int postId;
+  final String postId;
   final double moodTheme;
   final String postTitle;
   final String postContent;
+  final DateTime logDate;
   final DateTime createdAt;
   final String userId;
 
@@ -11,16 +12,18 @@ class PostModel {
     required this.moodTheme,
     required this.postTitle,
     required this.postContent,
+    required this.logDate,
     required this.createdAt,
     required this.userId,
   });
 
   PostModel.fromJson(Map<String, dynamic> json)
-      : postId = json["postId"],
+      : postId = json["postId"].toString(),
         moodTheme = json["moodTheme"],
         postTitle = json["postTitle"],
         postContent = json["postContent"],
-        createdAt = json["createdAt"],
+        logDate = (json['createdAt']).toDate(),
+        createdAt = (json['createdAt']).toDate(),
         userId = json["userId"];
 
   Map<String, dynamic> toJson() {
@@ -29,6 +32,7 @@ class PostModel {
       "moodTheme": moodTheme,
       "postTitle": postTitle,
       "postContent": postContent,
+      "logDate": logDate,
       "createdAt": createdAt,
       "userId": userId,
     };

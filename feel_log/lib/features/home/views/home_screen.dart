@@ -1,81 +1,212 @@
-import 'package:feel_log/core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:feel_log/features/home/view_model/home_view_model.dart';
+import 'package:feel_log/features/home/views/widgets/post_item.dart';
+import 'package:feel_log/core/core.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class Event {
+  String title;
+  Event(this.title);
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  CalendarFormat _calendarFormat = CalendarFormat.week;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+
+  Map<DateTime, List<Event>> events = {
+    DateTime.utc(2025, 3, 10): [Event('title'), Event('title2')],
+    DateTime.utc(2025, 3, 12): [
+      Event('title'),
+      Event('title2'),
+      Event('title3')
+    ],
+    DateTime.utc(2025, 3, 13): [
+      Event('title'),
+      Event('title2'),
+      Event('title3'),
+      Event('title4'),
+    ],
+    DateTime.utc(2025, 3, 9): [Event('title3')],
+  };
+
+  List<Event> _getEventsForDay(DateTime day) {
+    return events[day] ?? [];
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .2,
-            decoration: BoxDecoration(),
-            child: FLLogo(
-              isAuth: false,
-            ),
+    final size = MediaQuery.of(context).size;
+
+    return ref.watch(homeProvider).when(
+          loading: () => Center(
+            child: CircularProgressIndicator(),
           ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(64.0),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: Color(0xFFFDDF6F),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "😄",
-                              style: TextStyle(fontSize: 60.0),
-                            ),
-                            Text(
-                              "예시 대표 텍스트",
-                              style: TextStyle(
-                                  color: Color(0xFF4A411E),
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                              ),
-                              child: Text("2025.03.08 SAT"),
-                            ),
-                            Text(
-                              "안녕하세요 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                              style: TextStyle(fontSize: 16.0),
-                            )
-                          ],
-                        )
-                      ],
+          error: (error, stackTrace) => Center(
+              child: Text(
+            "$error",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          )),
+          data: (posts) => Scaffold(
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    width: size.width,
+                    height: 48.0,
+                    decoration: BoxDecoration(),
+                    child: FLLogo(
+                      isAuth: false,
                     ),
                   ),
-                ),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: -20.0,
+                        right: 0,
+                        child: Container(
+                          width: 20.0,
+                          height: 20.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: size.width - 20.0,
+                          //height: 240.0,
+                          padding: EdgeInsetsDirectional.only(
+                              end: 12.0, bottom: 12.0),
+                          decoration: BoxDecoration(
+                            color: Color(0xFF010101),
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(40.0),
+                            ),
+                          ),
+                          child: TableCalendar(
+                            focusedDay: _focusedDay,
+                            firstDay: DateTime(2000),
+                            lastDay: DateTime(2100),
+                            calendarFormat: _calendarFormat,
+                            onFormatChanged: (format) {
+                              setState(() {
+                                _calendarFormat = format;
+                              });
+                            },
+                            availableCalendarFormats: {
+                              CalendarFormat.month: 'Month',
+                              CalendarFormat.week: 'Week',
+                            },
+                            selectedDayPredicate: (day) =>
+                                isSameDay(_selectedDay, day),
+                            onDaySelected: (selectedDay, focusedDay) {
+                              setState(() {
+                                _selectedDay = selectedDay;
+                                _focusedDay = focusedDay;
+                              });
+                            },
+                            eventLoader: _getEventsForDay,
+                            headerStyle: HeaderStyle(
+                              titleTextStyle: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                              formatButtonTextStyle: TextStyle(
+                                fontSize: 12.0,
+                                color: Color.fromRGBO(255, 255, 255, 0.5),
+                              ),
+                              formatButtonDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(
+                                  color: Color.fromRGBO(255, 255, 255, 0.5),
+                                ),
+                              ),
+                            ),
+                            calendarStyle: CalendarStyle(
+                              cellMargin: EdgeInsets.all(8.0),
+                              todayTextStyle:
+                                  TextStyle(color: Color(0xFF010101)),
+                              todayDecoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              markerSize: 4.0,
+                              markerDecoration: BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                              markersAnchor: -0.8,
+                              markerMargin:
+                                  const EdgeInsets.symmetric(horizontal: 1.0),
+                              markersMaxCount: 4,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(56.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 36.0,
+                          horizontal: 28.0,
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: ListView.separated(
+                                itemCount: posts.length,
+                                itemBuilder: (context, index) => PostItem(
+                                  postId: posts[index].postId,
+                                  moodTheme: posts[index].moodTheme,
+                                  postTitle: posts[index].postTitle,
+                                  postContent: posts[index].postContent,
+                                  createdAt: posts[index].createdAt,
+                                ),
+                                separatorBuilder: (context, index) => SizedBox(
+                                  height: 32.00,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      )),
-    );
+        );
   }
 }

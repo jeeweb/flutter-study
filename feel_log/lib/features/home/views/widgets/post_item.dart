@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:feel_log/features/post/view_model/post_view_model.dart';
 import 'package:feel_log/core/core.dart';
 
-class PostItem extends StatelessWidget {
+class PostItem extends ConsumerWidget {
+  final String postId;
   final double moodTheme;
   final String postTitle;
   final String postContent;
   final DateTime createdAt;
   const PostItem({
     super.key,
+    required this.postId,
     required this.moodTheme,
     required this.postTitle,
     required this.postContent,
@@ -20,10 +24,17 @@ class PostItem extends StatelessWidget {
     return DateFormat("yyyy.MM.dd").format(date);
   }
 
-  void _onDelete() {}
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    print("$postId, $moodTheme, $postTitle, $createdAt");
+    void onDelete(String postId) {
+      try {
+        ref.read(postProvider.notifier).deleteLog(postId);
+      } catch (e) {
+        print(e);
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -51,7 +62,7 @@ class PostItem extends StatelessWidget {
                 size: 18.0,
                 color: Colors.grey,
               ),
-              onPressed: _onDelete,
+              onPressed: () => onDelete(postId),
             )
           ],
         ),
