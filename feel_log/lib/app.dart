@@ -46,23 +46,23 @@ class FeelLogApp extends ConsumerWidget {
               foregroundColor: WidgetStateProperty.all(Color(0xFF010101)),
             ),
           )),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        //brightness: Brightness.dark,
-        textTheme: GoogleFonts.afacadTextTheme(),
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          //titleTextStyle: TextStyle(),
-        ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-      ),
+      // darkTheme: ThemeData(
+      //   useMaterial3: true,
+      //   //brightness: Brightness.dark,
+      //   textTheme: GoogleFonts.afacadTextTheme(),
+      //   splashColor: Colors.transparent,
+      //   highlightColor: Colors.transparent,
+      //   scaffoldBackgroundColor: Colors.white,
+      //   appBarTheme: AppBarTheme(
+      //     elevation: 0,
+      //     backgroundColor: Colors.white,
+      //     //titleTextStyle: TextStyle(),
+      //   ),
+      //   bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      //     elevation: 0,
+      //     backgroundColor: Colors.transparent,
+      //   ),
+      // ),
     );
   }
 }
