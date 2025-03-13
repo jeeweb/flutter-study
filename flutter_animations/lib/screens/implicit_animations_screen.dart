@@ -9,8 +9,48 @@ class ImplicitAnimationsScreen extends StatefulWidget {
 }
 
 class _ImplicitAnimationsScreenState extends State<ImplicitAnimationsScreen> {
+  bool _visible = true;
+
+  void _trigger() {
+    setState(() {
+      _visible = !_visible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Implict Animations'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedAlign(
+              alignment: _visible ? Alignment.topLeft : Alignment.topRight,
+              duration: Duration(seconds: 2),
+              child: AnimatedOpacity(
+                opacity: _visible ? 1 : 0.2,
+                duration: Duration(seconds: 2),
+                child: Container(
+                  width: size.width * .8,
+                  height: size.width * .8,
+                  color: Colors.amber,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: _trigger,
+              child: Text('Go!'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

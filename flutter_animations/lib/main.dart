@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animations/screens/menu_screen.dart';
+import 'package:flutter_animations/screens/implicit_animations_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           primary: Colors.blue,
         ),
       ),
-      home: const MenuScreen(),
+      home: const ImplicitAnimationsScreen(),
     );
   }
 }
