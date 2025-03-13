@@ -28,17 +28,15 @@ class _ImplicitAnimationsScreenState extends State<ImplicitAnimationsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedAlign(
-              alignment: _visible ? Alignment.topLeft : Alignment.topRight,
+            AnimatedContainer(
               duration: Duration(seconds: 2),
-              child: AnimatedOpacity(
-                opacity: _visible ? 1 : 0.2,
-                duration: Duration(seconds: 2),
-                child: Container(
-                  width: size.width * .8,
-                  height: size.width * .8,
-                  color: Colors.amber,
-                ),
+              width: _visible ? size.width : size.width * .8,
+              height: _visible ? size.width : size.width * .8,
+              transform: Matrix4.rotationZ(_visible ? 1 : 0),
+              transformAlignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: _visible ? Colors.red : Colors.amber,
+                borderRadius: BorderRadius.circular(_visible ? 300 : 0),
               ),
             ),
             SizedBox(
