@@ -28,18 +28,20 @@ class _ImplicitAnimationsScreenState extends State<ImplicitAnimationsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
-              // curve: Curves.bounceIn,
-              curve: Curves.elasticOut,
-              duration: Duration(seconds: 2),
-              width: size.width * .8,
-              height: size.width * .8,
-              transform: Matrix4.rotationZ(_visible ? 1 : 0),
-              transformAlignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: _visible ? Colors.red : Colors.amber,
-                borderRadius: BorderRadius.circular(_visible ? 100 : 0),
+            TweenAnimationBuilder(
+              tween: ColorTween(
+                begin: Colors.yellow,
+                end: Colors.red,
               ),
+              curve: Curves.bounceInOut,
+              duration: Duration(seconds: 10),
+              builder: (context, value, child) {
+                return Image.network(
+                  "https://miro.medium.com/v2/resize:fit:1400/1*W1aGmyVwe5kKGuyTvzdUEg.png",
+                  color: value,
+                  colorBlendMode: BlendMode.colorBurn,
+                );
+              },
             ),
             SizedBox(
               height: 50,
