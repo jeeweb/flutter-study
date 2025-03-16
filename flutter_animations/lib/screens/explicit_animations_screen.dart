@@ -15,9 +15,7 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: Duration(seconds: 10),
-  )..addListener(() {
-      setState(() {});
-    });
+  );
 
   void _play() {
     _animationController.forward();
@@ -34,12 +32,6 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   @override
   void initState() {
     super.initState();
-    /*
-    // ticker가 실행되는걸 확인할 수 있음
-    Ticker(
-      (elapsed) => print(elapsed),
-    ).start();
-    */
     Timer.periodic(Duration(milliseconds: 500), (timer) {
       // _animationController.value 를 출력해서 애니메이션이 실제로 실행되고 있음을 확인하기
       print(_animationController.value);
@@ -54,6 +46,8 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "build"); // build가 몇 번 호출되는지 확인 가능 -> 한번만 호출됨. AnimatedBuilder의 builder 부분만 rebuild 됨
     return Scaffold(
       appBar: AppBar(
         title: Text("Explicit Animations"),
@@ -62,11 +56,26 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "${_animationController.value}",
-              style: TextStyle(
-                fontSize: 28,
-              ),
+            AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                /*
+                return Text(
+                  "${_animationController.value}",
+                  style: TextStyle(
+                    fontSize: 28,
+                  ),
+                );
+                */
+                return Opacity(
+                  opacity: _animationController.value,
+                  child: Container(
+                    color: Colors.amber,
+                    width: 400,
+                    height: 400,
+                  ),
+                );
+              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
