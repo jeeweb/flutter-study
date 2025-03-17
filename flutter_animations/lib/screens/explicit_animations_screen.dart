@@ -16,6 +16,14 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   )..addListener(() {
       _range.value = _animationController.value;
     });
+  // ..addStatusListener((status){
+  //   // print(status); // status 확인 가능
+  //   if (status == AnimationStatus.completed) {
+  //     _animationController.reverse();
+  //   } else if(status == AnimationStatus.dismissed) {
+  //     _animationController.forward();
+  //   }
+  // });
 
   late final Animation<Decoration> _decoration = DecorationTween(
     begin: BoxDecoration(
@@ -66,24 +74,25 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
     super.dispose();
   }
 
-  /* slider에 값을 직접 설정했기 때문에 값이 결정지어져 애니메이션이 일어나지 않음
-  double _value = 0;
-
-  void _onChanged(double value) {
-    setState((){
-      _value = value;
-    });
-    _animationController.value = value;
-    // _animationController.animateTo(value); 로 변경하면 애니메이션이 됨
-  }
-  */
-
   final ValueNotifier<double> _range = ValueNotifier(0.0);
   // ValueNotifier는 값이 변경되면 화면을 rerendering 않고 수정해줌
 
   void _onChanged(double value) {
     _range.value = 0;
     _animationController.value = value;
+  }
+
+  bool _looping = false;
+
+  void _toggleLooping() {
+    if (_looping) {
+      _animationController.stop();
+    } else {
+      _animationController.repeat(reverse: true); // 애니메이션 반복 실행
+    }
+    setState(() {
+      _looping = !_looping;
+    });
   }
 
   @override
@@ -127,6 +136,10 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
                 ElevatedButton(
                   onPressed: _rewind,
                   child: Text("Rewind"),
+                ),
+                ElevatedButton(
+                  onPressed: _toggleLooping,
+                  child: Text(_looping ? "Stop looping" : "Start looping"),
                 ),
               ],
             ),
