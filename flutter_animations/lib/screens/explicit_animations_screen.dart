@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class ExplicitAnimationsScreen extends StatefulWidget {
@@ -15,12 +13,40 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: Duration(seconds: 2),
-  );
+  )..addListener(() {
+      _range.value = _animationController.value;
+    });
 
-  late final Animation<Color?> _color = ColorTween(
-    begin: Colors.amber,
-    end: Colors.red,
-  ).animate(_animationController);
+  late final Animation<Decoration> _decoration = DecorationTween(
+    begin: BoxDecoration(
+      color: Colors.amber,
+      borderRadius: BorderRadius.circular(20),
+    ),
+    end: BoxDecoration(
+      color: Colors.red,
+      borderRadius: BorderRadius.circular(120),
+    ),
+  ).animate(_curved);
+
+  late final Animation<double> _rotation = Tween(
+    begin: 0.0,
+    end: 0.5,
+  ).animate(_curved);
+
+  late final Animation<double> _scale = Tween(
+    begin: 1.0,
+    end: 1.1,
+  ).animate(_curved);
+
+  late final Animation<Offset> _position = Tween(
+    begin: Offset.zero,
+    end: Offset(0, -0.2), // -1은 -100%
+  ).animate(_curved);
+
+  late final CurvedAnimation _curved = CurvedAnimation(
+    parent: _animationController,
+    curve: Curves.elasticOut,
+  );
 
   void _play() {
     _animationController.forward();
@@ -35,24 +61,33 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
   }
 
   @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(milliseconds: 500), (timer) {
-      // _animationController.value 를 출력해서 애니메이션이 실제로 실행되고 있음을 확인하기
-      print(_animationController.value);
-    });
-  }
-
-  @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
 
+  /* slider에 값을 직접 설정했기 때문에 값이 결정지어져 애니메이션이 일어나지 않음
+  double _value = 0;
+
+  void _onChanged(double value) {
+    setState((){
+      _value = value;
+    });
+    _animationController.value = value;
+    // _animationController.animateTo(value); 로 변경하면 애니메이션이 됨
+  }
+  */
+
+  final ValueNotifier<double> _range = ValueNotifier(0.0);
+  // ValueNotifier는 값이 변경되면 화면을 rerendering 않고 수정해줌
+
+  void _onChanged(double value) {
+    _range.value = 0;
+    _animationController.value = value;
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(
-        "build"); // build가 몇 번 호출되는지 확인 가능 -> 한번만 호출됨. AnimatedBuilder의 builder 부분만 rebuild 됨
     return Scaffold(
       appBar: AppBar(
         title: Text("Explicit Animations"),
@@ -61,16 +96,23 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedBuilder(
-              animation: _color,
-              builder: (context, child) {
-                return Container(
-                  color: _color.value,
-                  width: 400,
-                  height: 400,
-                );
-              },
+            SlideTransition(
+              position: _position,
+              child: ScaleTransition(
+                scale: _scale,
+                child: RotationTransition(
+                  turns: _rotation,
+                  child: DecoratedBoxTransition(
+                    decoration: _decoration,
+                    child: SizedBox(
+                      height: 400,
+                      width: 400,
+                    ),
+                  ),
+                ),
+              ),
             ),
+            SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -87,7 +129,19 @@ class _ExplicitAnimationsScreenState extends State<ExplicitAnimationsScreen>
                   child: Text("Rewind"),
                 ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            ValueListenableBuilder(
+              valueListenable: _range,
+              builder: (context, value, child) {
+                return Slider(
+                  value: value,
+                  onChanged: _onChanged,
+                );
+              },
+            ),
           ],
         ),
       ),
