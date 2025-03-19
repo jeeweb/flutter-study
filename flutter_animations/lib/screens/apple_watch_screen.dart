@@ -14,12 +14,73 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
-    lowerBound: 0.005,
-    upperBound: 2.0,
+  )..forward();
+
+  late final CurvedAnimation _curve = CurvedAnimation(
+    parent: _animationController,
+    curve: Curves.bounceOut,
   );
 
+/* 세가지 색 모두 같은 값으로 시작
+  late Animation<double> _progress = Tween(
+    begin: 0.005,
+    end: 2.0,
+  ).animate(_curve);
+*/
+
+  late Animation<double> _redProgress = Tween(
+    begin: 0.005,
+    end: Random().nextDouble() * 2.0,
+  ).animate(_curve);
+
+  late Animation<double> _blueProgress = Tween(
+    begin: 0.005,
+    end: Random().nextDouble() * 2.0,
+  ).animate(_curve);
+
+  late Animation<double> _greenProgress = Tween(
+    begin: 0.005,
+    end: Random().nextDouble() * 2.0,
+  ).animate(_curve);
+
   void _animateValues() {
-    _animationController.forward();
+    //_animationController.forward(); // 화면에 접속하자마자 애니메이션이 실행되기 때문에 해당 코드는 필요 없음
+
+    /*
+    // 새로고침 버튼 누를 때마다 새로운 시작을 하도록 하기
+    final newBegin = _progress.value;
+    final random = Random();
+    final newEnd = random.nextDouble() * 2.0; // 0에서 2 사이의 수를 받음
+    setState(() {
+      
+      _progress = Tween(
+        begin: newBegin,
+        end: newEnd,
+        
+      ).animate(_curve);
+    });
+*/
+    setState(() {
+      _redProgress = Tween(
+        begin: _redProgress.value,
+        end: Random().nextDouble() * 2.0,
+      ).animate(_curve);
+      _blueProgress = Tween(
+        begin: _blueProgress.value,
+        end: Random().nextDouble() * 2.0,
+      ).animate(_curve);
+      _greenProgress = Tween(
+        begin: _greenProgress.value,
+        end: Random().nextDouble() * 2.0,
+      ).animate(_curve);
+    });
+    _animationController.forward(from: 0); // 애니메이션 컨트롤러 재설정
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,10 +94,13 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
       ),
       body: Center(
         child: AnimatedBuilder(
-          animation: _animationController,
+          animation: _redProgress,
           builder: (context, child) {
             return CustomPaint(
-              painter: AppleWatchPainter(progress: _animationController.value),
+              painter: AppleWatchPainter(
+                  redValue: _redProgress.value,
+                  greenValue: _blueProgress.value,
+                  blueValue: _greenProgress.value),
               size: Size(400, 400), // 그림을 그린 캔버스 사이즈
             );
           },
@@ -51,9 +115,16 @@ class _AppleWatchScreenState extends State<AppleWatchScreen>
 }
 
 class AppleWatchPainter extends CustomPainter {
-  final double progress;
+  late double? redValue;
+  late double? greenValue;
+  late double? blueValue;
 
-  AppleWatchPainter({super.repaint, required this.progress});
+  AppleWatchPainter({
+    super.repaint,
+    this.redValue,
+    this.greenValue,
+    this.blueValue,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -123,7 +194,7 @@ class AppleWatchPainter extends CustomPainter {
     canvas.drawArc(
       redArcRect, // rect
       startingAngle, // startAngle
-      progress * pi, // 1.5 * pi, // sweepAngle
+      redValue! * pi, // 1.5 * pi, // sweepAngle
       false, // useCenter
       redArcPaint, // paint
     );
@@ -143,7 +214,7 @@ class AppleWatchPainter extends CustomPainter {
     canvas.drawArc(
       grenArcRect, // rect
       startingAngle, // startAngle
-      progress * pi, //1.2 * pi, // sweepAngle
+      greenValue! * pi, //1.2 * pi, // sweepAngle
       false, // useCenter
       greenArcPaint, // paint
     );
@@ -163,14 +234,22 @@ class AppleWatchPainter extends CustomPainter {
     canvas.drawArc(
       blueArcRect, // rect
       startingAngle, // startAngle
-      progress * pi, //0.6 * pi, // sweepAngle
+      blueValue! * pi, //0.6 * pi, // sweepAngle
       false, // useCenter
       blueArcPaint, // paint
     );
   }
 
+  /*
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+  */
+
+  // 새로운 값이 이전 값과 다른 경우에만 다시 그리기 -> progress 값이 바뀔 때만 다시 그리기
+  @override
+  bool shouldRepaint(covariant AppleWatchPainter oldDelegate) {
     return true;
   }
 }
