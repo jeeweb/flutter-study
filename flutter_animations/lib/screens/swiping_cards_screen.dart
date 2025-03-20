@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SwipingCardsScreen extends StatefulWidget {
@@ -17,6 +19,11 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     lowerBound: size.width * -1,
     upperBound: size.width,
     value: 0.0,
+  );
+
+  late final Tween<double> _rotation = Tween(
+    begin: -15,
+    end: 15,
   );
 
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
@@ -42,6 +49,9 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
       body: AnimatedBuilder(
         animation: _animationController,
         builder: (context, child) {
+          final angle = _rotation.transform(
+              (_animationController.value + size.width / 2) / size.width);
+          print(angle);
           return Stack(
             children: [
               Align(
@@ -52,12 +62,15 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
                       _onHorizontalDragEnd, // 사용자가 카드를 가로로 드래그 할 때 호출
                   child: Transform.translate(
                     offset: Offset(_animationController.value, 0),
-                    child: Material(
-                      elevation: 10,
-                      color: Colors.red.shade100,
-                      child: SizedBox(
-                        width: size.width * 0.8,
-                        height: size.height * 0.5,
+                    child: Transform.rotate(
+                      angle: angle * pi / 180,
+                      child: Material(
+                        elevation: 10,
+                        color: Colors.red.shade100,
+                        child: SizedBox(
+                          width: size.width * 0.8,
+                          height: size.height * 0.5,
+                        ),
                       ),
                     ),
                   ),
