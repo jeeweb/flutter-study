@@ -16,8 +16,8 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: Duration(milliseconds: 2000),
-    lowerBound: size.width * -1,
-    upperBound: size.width,
+    lowerBound: (size.width + 100) * -1,
+    upperBound: (size.width + 100),
     value: 0.0,
   );
 
@@ -26,12 +26,31 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
     end: 15,
   );
 
+  late final Tween<double> _scale = Tween(
+    begin: 0.8,
+    end: 1,
+  );
+
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
     _animationController.value += details.delta.dx;
   }
 
   void _onHorizontalDragEnd(DragEndDetails details) {
-    _animationController.animateTo(0, curve: Curves.bounceOut);
+    // print(_animationController.value.abs());  // 카드가 움직인 값
+    // print(size.width - 100);  // 카드를 사라지게 할 기준점. 해당 기준점보다 카드가 더 움직이면 사라지도록 하기
+
+    final bound = size.width - 200;
+    final dropZone = size.width + 200;
+
+    if (_animationController.value.abs() >= bound) {
+      if (_animationController.value.isNegative) {
+        _animationController.animateTo(dropZone * -1);
+      } else {
+        _animationController.animateTo(dropZone);
+      }
+    } else {
+      _animationController.animateTo(0, curve: Curves.bounceOut);
+    }
   }
 
   @override
@@ -51,11 +70,28 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
         builder: (context, child) {
           final angle = _rotation.transform(
               (_animationController.value + size.width / 2) / size.width);
-          print(angle);
+          //print(angle);
+          final scale =
+              _scale.transform(_animationController.value.abs() / size.width);
           return Stack(
+            alignment: Alignment.topCenter,
             children: [
-              Align(
-                alignment: Alignment.topCenter,
+              Positioned(
+                top: 100,
+                child: Transform.scale(
+                  scale: scale,
+                  child: Material(
+                    elevation: 10,
+                    color: Colors.blue.shade100,
+                    child: SizedBox(
+                      width: size.width * 0.8,
+                      height: size.height * 0.5,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 100,
                 child: GestureDetector(
                   onHorizontalDragUpdate: _onHorizontalDragUpdate,
                   onHorizontalDragEnd:
@@ -75,7 +111,7 @@ class _SwipingCardsScreenState extends State<SwipingCardsScreen>
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           );
         },
