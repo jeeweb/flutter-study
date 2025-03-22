@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animations/challenge/custom_painter_pomodoro.dart';
 import 'package:flutter_animations/screens/menu_screen.dart';
 
 void main() {
