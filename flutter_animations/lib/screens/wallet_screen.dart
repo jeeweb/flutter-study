@@ -212,6 +212,52 @@ class CardDetailScreen extends StatelessWidget {
                 isExpanded: false,
               ),
             ),
+            ...[
+              // 아래 항목들에 적용한 애니메이션이 위의 hero에도 영향을 주는 것을 막기위해 Column의 자식 목록 안에 목록을 별도로 만들어줌
+              for (var i in [1, 1, 1, 1])
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: ListTile(
+                    tileColor: Colors.grey.shade100,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    leading: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.red),
+                      child: const Icon(
+                        Icons.shopping_bag,
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text(
+                      "Uniqlo",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "Gangnam Branch",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                    trailing: const Text(
+                      "\$452,895",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+            ].animate(interval: 500.ms).fadeIn(begin: 0).flipV(
+                  begin: -0.8,
+                  end: 0,
+                  curve: Curves.bounceOut,
+                ),
           ],
         ),
       ),
