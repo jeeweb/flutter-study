@@ -17,29 +17,29 @@ class _WalletScreenState extends State<WalletScreen> {
       ),
       body: Center(
         // 처음 등장할때 애니메이션 실행
-        child: Animate(
-          effects: [
-            FadeEffect(
+        child: Text(
+          'Hello!',
+          style: TextStyle(
+            fontSize: 66,
+          ),
+        )
+            .animate()
+            .fadeIn(
               begin: 0,
-              end: 1,
-              //duration: Duration(milliseconds: 500),
               duration: 1.seconds,
-              curve: Curves.easeInCubic,
-            ),
-            ScaleEffect(
+            )
+            .scale(
               alignment: Alignment.center,
               begin: Offset.zero,
+              duration: 1.seconds,
               end: Offset(1, 1),
-              duration: 500.ms,
+            )
+            .then(delay: 2.seconds)
+            .slideX(
+              begin: 0,
+              end: -10,
+              duration: 1.seconds,
             ),
-          ],
-          child: Text(
-            'Hello!',
-            style: TextStyle(
-              fontSize: 66,
-            ),
-          ),
-        ),
       ),
     );
   }
